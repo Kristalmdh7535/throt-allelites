@@ -27,14 +27,14 @@ export default function BikeCard({ bike }: { bike: Motorbike }) {
           </div>
         </CardHeader>
         <CardContent className="p-4 flex-grow">
-          <Badge variant="secondary">{bike.brand}</Badge>
+          <Badge variant="outline">{bike.brand}</Badge>
           <CardTitle className="mt-2 font-headline text-2xl leading-tight">
             {bike.name}
           </CardTitle>
         </CardContent>
         <CardFooter className="p-4 pt-0 flex justify-between items-center">
           <p className="text-lg font-bold text-primary">{formatCurrency(bike.price)}</p>
-          <div className="flex items-center text-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="flex items-center text-accent-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <span className="text-sm font-semibold">Details</span>
             <ArrowRight className="ml-1 h-4 w-4" />
           </div>

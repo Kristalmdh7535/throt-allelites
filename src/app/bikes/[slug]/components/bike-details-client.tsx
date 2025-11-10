@@ -43,7 +43,7 @@ export default function BikeDetailsClient({ gallery, bikeName }: BikeDetailsClie
         <CarouselPrevious className="left-2" />
         <CarouselNext className="right-2" />
       </Carousel>
-      <Button asChild size="lg" className="w-full bg-accent hover:bg-accent/90">
+      <Button asChild size="lg" className="w-full">
         <Link href={`/contact?bike=${encodeURIComponent(bikeName)}`}>
           <Mail className="mr-2 h-5 w-5" />
           Request Info

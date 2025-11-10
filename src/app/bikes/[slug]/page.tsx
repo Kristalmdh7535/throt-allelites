@@ -43,7 +43,7 @@ export default async function BikePage({ params }: BikePageProps) {
         <div className="lg:col-span-2">
           <Card>
             <CardHeader>
-              <Badge variant="secondary" className="w-fit">{bike.brand}</Badge>
+              <Badge variant="outline" className="w-fit">{bike.brand}</Badge>
               <CardTitle className="font-headline text-4xl mt-2">{bike.name}</CardTitle>
               <p className="text-3xl font-bold text-primary mt-2">{formatCurrency(bike.price)}</p>
             </CardHeader>
