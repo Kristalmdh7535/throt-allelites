@@ -12,7 +12,7 @@ export default function Logo({ className }: { className?: string }) {
       )}
     >
       <Bike className="h-7 w-7" />
-      <span className="font-headline text-2xl font-bold">TorqueElite</span>
+      <span className="font-headline text-2xl font-bold">Throt-All Elites</span>
     </Link>
   );
 }

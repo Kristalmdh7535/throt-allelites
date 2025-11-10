@@ -9,7 +9,7 @@ export default function HomePage() {
 
   return (
     <div>
-      <section className="relative h-[60vh] w-full text-white">
+      <section className="relative h-[80vh] w-full text-white">
         {heroImage && (
           <Image
             src={heroImage.imageUrl}
@@ -23,7 +23,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
           <h1 className="font-headline text-5xl md:text-7xl lg:text-8xl font-bold text-shadow-lg tracking-wider">
-            TorqueElite
+            Throt-All Elites
           </h1>
           <p className="mt-4 font-body text-lg md:text-xl max-w-2xl text-shadow">
             Experience the Pinnacle of Performance and Luxury
