@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Motorcycle } from "lucide-react";
+import { Bike } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function Logo({ className }: { className?: string }) {
@@ -11,7 +11,7 @@ export default function Logo({ className }: { className?: string }) {
         className
       )}
     >
-      <Motorcycle className="h-7 w-7" />
+      <Bike className="h-7 w-7" />
       <span className="font-headline text-2xl font-bold">TorqueElite</span>
     </Link>
   );
