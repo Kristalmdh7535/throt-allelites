@@ -20,7 +20,7 @@ const services: Service[] = [
     description: 'Book a test ride to experience your dream bike at our showroom or a partnered location.',
     cta: 'Book Now',
     ctaLink: '/test-ride',
-    icon: '/images/test-ride.jpg',
+    icon: '/images/motorbike.jpg',
   },
   {
     title: 'Premium Delivery',
@@ -34,7 +34,7 @@ const services: Service[] = [
     description: 'Enjoy lifetime support, warranty services, and priority maintenance bookings.',
     cta: 'Get Support',
     ctaLink: '/support',
-    icon: '/images/support.svg',
+    icon: '/images/customerService.jpg',
   },
 ];
 

@@ -6,7 +6,7 @@ export default function Navbar() {
       <div className="container mx-auto flex justify-between items-center">
         <Link href="/" className="flex items-center space-x-3">
           <img
-            src="/images/throt-logo.png" 
+            src="/images/motorbike.jpg" 
             alt="Throt-All Elites Logo"
             className="h-10 w-10 rounded-full object-cover" 
           />
