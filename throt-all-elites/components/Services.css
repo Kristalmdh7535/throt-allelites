@@ -1,85 +1,126 @@
 /* components/Services.css */
 .services-section {
-  padding: 4rem 0;
-  background-color: #f5f5f5;
+  padding: 5rem 0;
+  background-color: #0a0a0a; /* Dark background */
+  color: #e0e0e0;
 }
 
 .content-container {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
 }
 
 .services-title {
-  font-size: 2rem;
-  font-weight: 700;
+  font-size: 3rem;
+  font-weight: 800;
   text-align: center;
-  margin-bottom: 3rem;
-  color: #1a202c;
+  margin-bottom: 4rem;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 .services-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-}
-
-@media (min-width: 640px) {
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .services-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
 }
 
 .service-card {
-  background-color: #ffffff;
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: rgba(26, 26, 26, 0.8); /* Semi-transparent dark card */
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2.5rem;
+  border-radius: 1rem;
   text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 0, rgba(0, 191, 255, 0.2), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 0;
 }
 
 .service-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 0 30px rgba(0, 191, 255, 0.3);
+}
+
+.service-card:hover::before {
+  opacity: 1;
 }
 
 .service-icon {
-  margin-bottom: 1rem;
-  margin-left: auto;
-  margin-right: auto;
+  margin-bottom: 1.5rem;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  filter: drop-shadow(0 0 10px rgba(0, 191, 255, 0.5));
+  position: relative;
+  z-index: 1;
+}
+
+.service-icon img {
+  border-radius: 50%;
+}
+
+.service-card:hover .service-icon {
+  transform: scale(1.1) rotate(10deg);
 }
 
 .service-card-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: #1a202c;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #ffffff;
+  position: relative;
+  z-index: 1;
 }
 
 .service-card-description {
   font-size: 1rem;
-  color: #4a5568;
-  margin-bottom: 1rem;
+  color: #a0a0a0;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.service-card-cta {
+    position: relative;
+    z-index: 1;
 }
 
 .cta-button {
-  background-color: #2563eb;
+  background: linear-gradient(45deg, #00bfff, #1e90ff);
   color: #ffffff;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 0.25rem;
+  border-radius: 50px;
   font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .cta-button:hover {
-  background-color: #1e40af;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0, 191, 255, 0.5);
+}
+
+@media (max-width: 768px) {
+  .services-title {
+    font-size: 2.5rem;
+  }
 }
