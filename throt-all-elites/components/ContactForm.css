@@ -1,0 +1,115 @@
+.contact-section {
+  padding: 5rem 2rem;
+  background: linear-gradient(#ffff);
+  color: #e0e0e0;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contact-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: black;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.contact-subtitle {
+  font-size: 1.1rem;
+  color: #a0a0a0;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 500px;
+  margin: 0 auto;
+  background: rgba(26, 26, 26, 0.9);
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.contact-input,
+.contact-textarea {
+  padding: 0.75rem;
+  border: 1px solid #4b5563;
+  border-radius: 0.375rem;
+  background-color: #1f2937;
+  color: #ffffff;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.contact-input:focus,
+.contact-textarea:focus {
+  border-color: #dc2626;
+  outline: none;
+}
+
+.contact-textarea {
+  height: 120px;
+  resize: vertical;
+}
+
+.contact-button {
+  padding: 0.75rem;
+  background: linear-gradient(45deg, #dc2626, #b91c1c);
+  color: #ffffff;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(220, 38, 38, 0.5);
+}
+
+.contact-status {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: #ffffff;
+}
+
+/* Decorative Elements */
+.contact-section::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(220, 38, 38, 0.1) 0%, transparent 70%);
+  opacity: 0.5;
+  z-index: 0;
+}
+
+.contact-container {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .contact-title {
+    font-size: 2rem;
+  }
+  .contact-form {
+    padding: 1.5rem;
+  }
+}
