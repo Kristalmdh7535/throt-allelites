@@ -28,6 +28,13 @@ public class Product {
     @Column(nullable = false, length = 100)
     private String type; // Naked, Cruiser, Sport, etc.
 
+    @Column(name = "dimension_mm_l_w_h",nullable = false, length = 50)
+    //These dimensions describe the physical size of the bike.
+    // Width represents the distance across the widest part of the bike,
+    // length is the distance from front to back,
+    // and height is the vertical measurement from the ground to the highest point of the bike.
+    private String dimensionMmLWH; // length*width*height
+
     @Column(name = "engine_capacity_cc", nullable = false)
     private Integer engineCapacityCc;
 
@@ -101,45 +108,41 @@ public class Product {
     private List<ProductImage> images = new ArrayList<>();
 }
 
-
-//JSON format example:
-//{
-//        "name": "Bajaj Pulsar NS200",
-//        "brand": "Bajaj",
+//Json format to
+// {
+//        "name": "KTM Duke 200",
+//        "brand": "KTM",
 //        "type": "Naked",
+//        "dimensionMmLWH": "2002 x 873 x 1274",
 //        "engineCapacityCc": 200,
-//        "engineType": "Liquid Cooled, Single Cylinder, 4-Stroke, FI",
-//        "maxPower": "24.5 PS @ 9750 rpm",
-//        "maxTorque": "18.6 Nm @ 8000 rpm",
+//        "engineType": "Liquid Cooled, Single Cylinder, DOHC",
+//        "maxPower": "25 PS @ 10000 rpm",
+//        "maxTorque": "19.5 Nm @ 8000 rpm",
 //        "mileageKmpl": "35 km/l",
-//        "topSpeedKmph": "136 km/h",
+//        "topSpeedKmph": "142 km/h",
 //        "gearbox": "6 Speed",
-//        "clutchType": "Wet Multi-plate",
-//        "frontBrake": "300mm Disc, Dual Channel ABS",
-//        "rearBrake": "230mm Disc, Single Channel ABS",
-//        "frontSuspension": "Telescopic with Anti-friction Bush",
-//        "rearSuspension": "Nitrox Mono Shock Absorber",
-//        "frontTyre": "100/80-17 52P Tubeless",
-//        "rearTyre": "130/70-17 62P Tubeless",
+//        "clutchType": "Slipper Clutch",
+//        "frontBrake": "300mm Disc, ABS",
+//        "rearBrake": "230mm Disc, ABS",
+//        "frontSuspension": "WP USD Fork",
+//        "rearSuspension": "WP Monoshock",
+//        "frontTyre": "110/70-17",
+//        "rearTyre": "150/60-17",
 //        "tyreType": "Tubeless",
-//        "fuelTankCapacityL": "12 L",
-//        "seatHeightMm": "805 mm",
-//        "groundClearanceMm": "168 mm",
-//        "kerbWeightKg": "158 kg",
-//        "price": 135000.0,
-//        "stock": 25,
+//        "fuelTankCapacityL": "13.4 L",
+//        "seatHeightMm": "822 mm",
+//        "groundClearanceMm": "155 mm",
+//        "kerbWeightKg": "159 kg",
+//        "stock": 12,
+//        "price": 245000.0,
 //        "active": true,
 //        "images": [
 //        {
-//        "imageUrl": "https://example.com/pulsar-ns200-front.jpg",
+//        "imageUrl": "https://example.com/duke200-front.jpg",
 //        "primary": true
 //        },
 //        {
-//        "imageUrl": "https://example.com/pulsar-ns200-side.jpg",
-//        "primary": false
-//        },
-//        {
-//        "imageUrl": "https://example.com/pulsar-ns200-rear.jpg",
+//        "imageUrl": "https://example.com/duke200-side.jpg",
 //        "primary": false
 //        }
 //        ]

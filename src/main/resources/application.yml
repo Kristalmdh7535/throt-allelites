@@ -41,3 +41,9 @@ server:
 jwt:
   secret: ${JWT_SECRET}
   expiration: 86400000 # 24 hours in milliseconds
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+    com.bca6th.project.motorbikebackend: DEBUG

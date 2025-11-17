@@ -18,10 +18,17 @@ public class SwaggerConfig {
                         .title("Motorbike Dealership API")
                         .version("1.0.0")
                         .description("Backend API for Dhamaka Throt-all motorbike with OTP login, product search, test rides, delivery and messaging"))
-                .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
-                .components(new Components()
-                        .addSecuritySchemes("Bearer Authentication", createdAPIKeyScheme()));
-
+                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
+                .components(
+                        new Components()
+                                .addSecuritySchemes("bearerAuth",
+                                        new SecurityScheme()
+                                                .type(SecurityScheme.Type.HTTP)
+                                                .scheme("bearer")
+                                                .bearerFormat("JWT")
+                                                .in(SecurityScheme.In.HEADER)
+                                                .name("Authorization"))
+                );
     }
 
     private SecurityScheme createdAPIKeyScheme() {
