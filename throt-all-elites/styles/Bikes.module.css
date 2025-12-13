@@ -1,0 +1,31 @@
+/* Keyframe animation for cards fading in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  /* We will apply a staggered animation delay inline in the component */
+  animation: fadeIn 0.5s ease-out forwards;
+  opacity: 0; /* Start as invisible, animation will make it visible */
+}
+
+.title {
+  background: linear-gradient(to right, #ef4444, #db2777);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.pageContainer {
+  background-color: #f9fafb;
+  background-image: radial-gradient(#d1d5db 0.5px, transparent 0.5px);
+  background-size: 15px 15px;
+}
