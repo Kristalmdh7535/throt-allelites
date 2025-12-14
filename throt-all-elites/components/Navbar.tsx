@@ -1,31 +1,24 @@
 import Link from "next/link";
+import styles from "./Navbar.module.css";
 
 export default function Navbar() {
   return (
-    <nav className="bg-throt-dark-red text-white p-4 sticky top-0 z-50">
-      <div className="container mx-auto flex justify-between items-center">
-        <Link href="/" className="flex items-center space-x-3">
+    <nav className={styles.navbar}>
+      <div className={styles.container}>
+        <Link href="/" className={styles.logoLink}>
           <img
             src="/images/motorbike.jpg" 
             alt="Throt-All Elites Logo"
-            className="h-10 w-10 rounded-full object-cover" 
+            className={styles.logoImage} 
           />
-          <span className="text-2xl font-bold text-yellow-300">Throt-All Elites</span> {/* Original color */}
+          <span className={styles.logoText}>Throt-All Elites</span> 
         </Link>
-        <ul className="flex space-x-6">
-          <li>
-            <Link href="/" className="hover:text-gray-300">Home</Link>
-          </li>
-          <li>
-            <Link href="/bikes" className="hover:text-gray-300">Bikes</Link>
-          </li>
-          <li>
-            <Link href="/about" className="hover:text-gray-300">About</Link>
-          </li>
-          <li>
-            <Link href="/contact" className="hover:text-gray-300">Contact</Link>
-          </li>
-        </ul>
+        <div className={styles.navList}>
+          <Link href="/" className={styles.navLink}>Home</Link>
+          <Link href="/bikes" className={styles.navLink}>Bikes</Link>
+          <Link href="/about" className={styles.navLink}>About</Link>
+          <Link href="/contact" className={styles.navLink}>Contact</Link>
+        </div>
       </div>
     </nav>
   );

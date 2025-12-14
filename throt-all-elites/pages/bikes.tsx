@@ -4,8 +4,6 @@ import { mockBikes } from '../data/mockBikes';
 import { Bike } from '../interfaces/Bike';
 import styles from '../styles/Bikes.module.css';
 
-const BRANDS = ['Ducati', 'BMW', 'MV Agusta', 'Yamaha', 'Aprilia', 'Suzuki', 'Kawasaki', 'Honda', 'Harley-Davidson', 'KTM'];
-const TYPES = ['Sport', 'Naked', 'Cruiser', 'Touring', 'Adventure', 'Dirt/Offroad'];
 
 export default function BikesPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -14,11 +12,15 @@ export default function BikesPage() {
   const [sortBy, setSortBy] = useState('');
   const [isFilterVisible, setIsFilterVisible] = useState(false);
 
+  const brands = useMemo(() => Array.from(new Set(mockBikes.map(bike => bike.brand))), []);
+  const types = useMemo(() => Array.from(new Set(mockBikes.map(bike => bike.type))), []);
+
   const handleBrandChange = (brand: string) => {
     setSelectedBrands(prev =>
       prev.includes(brand) ? prev.filter(b => b !== brand) : [...prev, brand]
     );
   };
+
 
   const handleTypeChange = (type: string) => {
     setSelectedTypes(prev =>
@@ -110,7 +112,7 @@ export default function BikesPage() {
               <div>
                 <h3 className="font-semibold mb-2">Brands</h3>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  {BRANDS.map(brand => (
+                  {brands.map(brand => (
                     <label key={brand} className="flex items-center space-x-2">
                       <input
                         type="checkbox"
@@ -126,7 +128,7 @@ export default function BikesPage() {
               <div>
                 <h3 className="font-semibold mb-2">Types</h3>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  {TYPES.map(type => (
+                  {types.map(type => (
                     <label key={type} className="flex items-center space-x-2">
                       <input
                         type="checkbox"

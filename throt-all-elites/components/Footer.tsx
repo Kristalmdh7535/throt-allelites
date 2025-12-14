@@ -1,17 +1,17 @@
-import ContactForm from "./ContactForm";
+import styles from "./Footer.module.css";
 
 export default function Footer() {
   return (
-    <footer className="bg-throt-dark-red text-white p-4 sticky top-0 z-50">
-      <div className="container mx-auto text-center">
-        <h3 className="text-2xl font-bold mb-4">Throt-All Elites</h3>
-        <p className="mb-4">Contact us: kristalmdhr7535@gmail.com | +977 9823141414</p>
-        <div className="flex justify-center space-x-4">
-          <a href="#" className="hover:text-gray-300">Facebook</a>
-          <a href="#" className="hover:text-gray-300">Instagram</a>
-          <a href="#" className="hover:text-gray-300">Twitter</a>
+    <footer className={styles.footer}>
+      <div className={styles.container}>
+        <h3 className={styles.title}>Throt-All Elites</h3>
+        <p className={styles.contactInfo}>Contact us: kristalmdhr7535@gmail.com | +977 9823141414</p>
+        <div className={styles.socialLinks}>
+          <a href="#" className={styles.socialLink}>Facebook</a>
+          <a href="#" className={styles.socialLink}>Instagram</a>
+          <a href="#" className={styles.socialLink}>Twitter</a>
         </div>
-        <p className="mt-4">&copy; 2025 Throt-All Elites. All rights reserved.</p>
+        <p className={styles.copyRight}>&copy; 2025 Throt-All Elites. All rights reserved.</p>
       </div>
     </footer>
   );

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Bike } from "../types/Bike";
+import styles from "./FeaturedBikes.module.css";
 
 export default function FeaturedBikes() {
   const [bikes, setBikes] = useState<Bike[]>([]);
@@ -23,32 +24,32 @@ export default function FeaturedBikes() {
   }, []);
 
   return (
-    <section className="py-16 bg-gray-100">
-      <div className="container mx-auto">
-        <h2 className="text-4xl font-bold text-center mb-12">Featured Bikes</h2>
+    <section className={styles.featuredBikes}>
+      <div className={styles.container}>
+        <h2 className={styles.title}>Featured Bikes</h2>
         {error ? (
-          <p className="text-red-600 text-center">{error}</p>
+          <p className={styles.error}>{error}</p>
         ) : bikes.length === 0 ? (
-          <p className="text-gray-600 text-center">Loading bikes...</p>
+          <p className={styles.loading}>Loading bikes...</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className={styles.bikesGrid}>
             {bikes.map((bike: Bike) => (
               <motion.div
                 key={bike.id}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
-                className="bg-white rounded-lg shadow-lg overflow-hidden"
+                className={styles.bikeCard}
               >
                 <img
                   src={bike.image}
                   alt={bike.name}
-                  className="w-full h-48 object-cover"
+                  className={styles.bikeImage}
                 />
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold mb-2">{bike.name}</h3>
-                  <p className="text-gray-600 mb-2">{bike.description}</p>
-                  <p className="text-red-600 font-bold">{bike.price}</p>
+                <div className={styles.bikeCardContent}>
+                  <h3 className={styles.bikeName}>{bike.name}</h3>
+                  <p className={styles.bikeDescription}>{bike.description}</p>
+                  <p className={styles.bikePrice}>{bike.price}</p>
                 </div>
               </motion.div>
             ))}

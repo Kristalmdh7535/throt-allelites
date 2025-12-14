@@ -1,0 +1,48 @@
+.footer {
+  background-color: #8b0000;
+  color: #ffffff;
+  padding: 1rem;
+}
+
+.container {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  text-align: center;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.contactInfo {
+  margin-bottom: 1rem;
+}
+
+.socialLinks {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.socialLink {
+  color: #ffffff;
+  text-decoration: none;
+  margin-left: 1rem;
+}
+
+.socialLink:first-child {
+  margin-left: 0;
+}
+
+.socialLink:hover {
+  color: #d1d5db;
+}
+
+.copyRight {
+  margin-top: 1rem;
+}
