@@ -70,7 +70,7 @@ const Services: React.FC = () => {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              variants={cardVariants}>
+              variants={undefined}>
               <div className="service-icon">
                 <Image src={service.icon} alt={`${service.title} icon`} width={80} height={80} />
               </div>
