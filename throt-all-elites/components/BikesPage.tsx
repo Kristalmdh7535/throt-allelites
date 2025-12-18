@@ -1,3 +1,4 @@
+'use client';
 import { useState, useMemo } from 'react';
 import BikeCard from '../components/BikeCard';
 import { mockBikes } from '../data/mockBikes';
@@ -38,24 +39,20 @@ export default function BikesPage() {
   const filteredAndSortedBikes = useMemo(() => {
     let bikes: Bike[] = [...mockBikes];
 
-    // Search filter
     if (searchQuery) {
       bikes = bikes.filter(bike =>
         bike.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
 
-    // Brand filter
     if (selectedBrands.length > 0) {
       bikes = bikes.filter(bike => selectedBrands.includes(bike.brand));
     }
 
-    // Type filter
     if (selectedTypes.length > 0) {
       bikes = bikes.filter(bike => selectedTypes.includes(bike.type));
     }
 
-    // Sorting
     if (sortBy === 'price-asc') {
       bikes.sort((a, b) => a.price - b.price);
     } else if (sortBy === 'price-desc') {
