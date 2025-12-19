@@ -18,6 +18,7 @@ export default function Navbar() {
           <Link href="/bikes" className={styles.navLink}>Bikes</Link>
           <Link href="/about" className={styles.navLink}>About</Link>
           <Link href="/contact" className={styles.navLink}>Contact</Link>
+          <Link href="/signup" className={styles.navLink}>Sign Up/In</Link>
         </div>
       </div>
     </nav>

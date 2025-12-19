@@ -2,9 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Add custom styles if needed */
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
+.bg-gold-600 { background-color: #b8860b; } 
+.bg-gold-500 { background-color: #d4af37; } 
+.text-gold-500 { color: #d4af37; }
+.focus\:border-gold-500:focus { border-color: #d4af37; }
