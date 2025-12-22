@@ -7,7 +7,7 @@ export default function SignupPage() {
       <form className={styles.form}>
         <div>
           <label className={styles.label}>Full Name</label>
-          <input type="text" required className={styles.input} />
+          <input type="text" required className={styles.input} placeholder="Prabek Rajbanshi" />
         </div>
 
         <div>

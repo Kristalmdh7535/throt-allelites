@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Bike } from "../types/Bike";
+import { Bike } from "../interfaces/FeaturedBikes";
 import styles from "./FeaturedBikes.module.css";
 
 export default function FeaturedBikes() {

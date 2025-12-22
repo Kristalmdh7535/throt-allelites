@@ -1,4 +1,4 @@
-import { Bike } from "@/types/Bike";
+import { Bike } from "@/interfaces/FeaturedBikes";
 
 export const mockBikes: Bike[] = [
   {

@@ -3,7 +3,7 @@ import { useState, useMemo } from 'react';
 import BikeCard from '../components/BikeCard';
 import { mockBikes } from '../data/mockBikes';
 import { Bike } from '../interfaces/Bike';
-import styles from '../styles/Bikes.module.css';
+import styles from '../components/Bikes.module.css';
 
 
 export default function BikesPage() {
