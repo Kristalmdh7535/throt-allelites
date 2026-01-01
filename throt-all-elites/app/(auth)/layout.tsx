@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "../globals.css";
 import styles from "./Auth.module.css";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Sign In | Throt-All Elites",
@@ -16,15 +13,11 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <div className={styles.container}>
-          <div className={styles.card}>
-            <h1 className={styles.heading}>Throt-All Elites</h1>
-            {children}
-          </div>
-        </div>
-      </body>
-    </html>
+    <div className={styles.container}>
+      <div className={styles.card}>
+        <h1 className={styles.heading}>Throt-All Elites</h1>
+        {children}
+      </div>
+    </div>
   );
 }
