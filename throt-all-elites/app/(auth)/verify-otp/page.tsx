@@ -40,7 +40,7 @@ export default function VerifyOtpPage(){
 
             localStorage.setItem("token", data.token);
 
-            router.push("/dashboard");
+            router.push("/");
         } catch (error: any) {
             setError(error.message);
         }finally{

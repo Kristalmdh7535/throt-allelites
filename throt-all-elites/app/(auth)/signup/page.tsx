@@ -10,6 +10,7 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [contactNo, setContactNo]= useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -35,9 +36,10 @@ export default function SignupPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          fullName,
-          email,
-          password,
+          name: fullName,
+          email: email,
+          password: password,
+          contactNo: contactNo,
         }),
       });
 
@@ -84,6 +86,19 @@ export default function SignupPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={loading}
+          />
+        </div>
+
+        <div>
+          <label className={styles.label}>Contact No.</label>
+          <input
+          type="tel"
+          required className={styles.input}
+          placeholder="98........"
+          value={contactNo}
+          onChange={(e)=> setContactNo(e.target.value.replace(/\D/g, ""))}
+          maxLength={16}
+          disabled={loading}
           />
         </div>
 
