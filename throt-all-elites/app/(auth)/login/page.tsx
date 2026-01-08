@@ -1,3 +1,4 @@
+// app/auth/login/page.tsx
 "use client";
 
 import { useState } from "react";
@@ -8,7 +9,7 @@ import styles from "../Auth.module.css";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
-  const [step, setStep] = useState<"email" | "otp">("email"); // email or otp
+  const [step, setStep] = useState<"email" | "otp">("email");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -53,22 +54,33 @@ export default function LoginPage() {
       const res = await fetch("/api/auth/verify-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, otp }), // assuming VerifyOtpRequest has email + otp
+        body: JSON.stringify({ email, otp }),
       });
 
       if (res.ok) {
-        const data = await res.json(); // { accessToken: "...", ... }
-        
-        // Store JWT (simple localStorage example; for production use httpOnly cookies or better auth lib)
-        localStorage.setItem("accessToken", data.accessToken);
+        const data = await res.json();
+
+        console.log("Login response:", data);
+
+        if (!data.token || typeof data.token !== "string") {
+          setError("Login failed: Invalid token received from server");
+          setLoading(false);
+          return;
+        }
+
+        // Save the correct field: data.token
+        localStorage.setItem("accessToken", data.token);
+
+        console.log("Token saved:", data.token.substring(0, 20) + "...");
 
         setMessage("Login successful!");
-        router.push("/dashboard"); // or wherever your protected page is
+        router.push("/dashboard");
       } else {
-        const data = await res.json();
-        setError(data.message || "Invalid or expired OTP");
+        const errorData = await res.json().catch(() => ({}));
+        setError(errorData.message || "Invalid or expired OTP");
       }
     } catch (err) {
+      console.error("Login error:", err);
       setError("Network error. Please try again.");
     } finally {
       setLoading(false);
@@ -106,7 +118,7 @@ export default function LoginPage() {
               type="text"
               required
               value={otp}
-              onChange={(e) => setOtp(e.target.value)}
+              onChange={(e) => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
               className={styles.input}
               placeholder="Enter 6-digit OTP"
               maxLength={6}
@@ -119,7 +131,10 @@ export default function LoginPage() {
 
           <button
             type="button"
-            onClick={() => setStep("email")}
+            onClick={() => {
+              setStep("email");
+              setOtp("");
+            }}
             className={styles.button}
             style={{ marginTop: "10px", background: "gray" }}
           >

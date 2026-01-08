@@ -1,66 +1,109 @@
 'use client';
-import { useState, useMemo } from 'react';
-import BikeCard from '../components/BikeCard';
-import { mockBikes } from '../data/mockBikes';
-import { Bike } from '../interfaces/Bike';
+import { api } from '@/lib/api';
+import { useState, useEffect, useMemo } from 'react';
+import BikeCard from '../components/BikeCard'; // Assume updated to ProductCard or handle Product
+import { Product } from '../interfaces/Product';
 import styles from '../components/Bikes.module.css';
-
 
 export default function BikesPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-  const [sortBy, setSortBy] = useState('');
+  const [sortBy, setSortBy] = useState('id');
+  const [sortDir, setSortDir] = useState('asc');
   const [isFilterVisible, setIsFilterVisible] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const brands = useMemo(() => Array.from(new Set(mockBikes.map(bike => bike.brand))), []);
-  const types = useMemo(() => Array.from(new Set(mockBikes.map(bike => bike.type))), []);
+  // Fetch unique brands and types from backend (or hardcoded if no endpoint)
+  const [brands, setBrands] = useState<string[]>([]);
+  const [types, setTypes] = useState<string[]>([]);
+
+  useEffect(() => {
+    // Fetch all products without filters to extract unique brands/types
+    const fetchOptions = async () => {
+      try {
+        const res = await fetch(`${api.products}?page=${currentPage}&size=12&sortBy=price&sortDir=asc`);
+        if (!res.ok) throw new Error('Failed to fetch options');
+        const data = await res.json();
+        const allProducts: Product[] = data.content;
+        setBrands(Array.from(new Set(allProducts.map(p => p.brand))));
+        setTypes(Array.from(new Set(allProducts.map(p => p.type))));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchOptions();
+  }, []);
 
   const handleBrandChange = (brand: string) => {
     setSelectedBrands(prev =>
       prev.includes(brand) ? prev.filter(b => b !== brand) : [...prev, brand]
     );
+    setCurrentPage(0);
   };
-
 
   const handleTypeChange = (type: string) => {
     setSelectedTypes(prev =>
       prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]
     );
+    setCurrentPage(0);
+  };
+
+  const handleSortChange = (value: string) => {
+    setSortBy(value);
+    if (value === 'price-asc') {
+      setSortBy('price');
+      setSortDir('asc');
+    } else if (value === 'price-desc') {
+      setSortBy('price');
+      setSortDir('desc');
+    } else {
+      setSortBy('id');
+      setSortDir('asc');
+    }
+    setCurrentPage(0);
   };
 
   const clearFilters = () => {
     setSearchQuery('');
     setSelectedBrands([]);
     setSelectedTypes([]);
-    setSortBy('');
+    setSortBy('id');
+    setSortDir('asc');
+    setCurrentPage(0);
   };
 
-  const filteredAndSortedBikes = useMemo(() => {
-    let bikes: Bike[] = [...mockBikes];
-
-    if (searchQuery) {
-      bikes = bikes.filter(bike =>
-        bike.name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-
-    if (selectedBrands.length > 0) {
-      bikes = bikes.filter(bike => selectedBrands.includes(bike.brand));
-    }
-
-    if (selectedTypes.length > 0) {
-      bikes = bikes.filter(bike => selectedTypes.includes(bike.type));
-    }
-
-    if (sortBy === 'price-asc') {
-      bikes.sort((a, b) => a.price - b.price);
-    } else if (sortBy === 'price-desc') {
-      bikes.sort((a, b) => b.price - a.price);
-    }
-
-    return bikes;
-  }, [searchQuery, selectedBrands, selectedTypes, sortBy]);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const params = new URLSearchParams({
+          name: searchQuery,
+          brand: selectedBrands.join(','),
+          type: selectedTypes.join(','),
+          page: currentPage.toString(),
+          size: '8',
+          sortBy,
+          sortDir,
+        });
+        const res = await fetch(`/api/products?${params.toString()}`);
+        if (!res.ok) throw new Error('Failed to fetch products');
+        const data = await res.json();
+        setProducts(data.content);
+        setTotalPages(data.totalPages);
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProducts();
+  }, [searchQuery, selectedBrands, selectedTypes, sortBy, sortDir, currentPage]);
 
   return (
     <div className={`${styles.pageContainer} min-h-screen`}>
@@ -77,7 +120,7 @@ export default function BikesPage() {
               type="text"
               placeholder="Search bikes by name..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(0); }}
               className="p-3 border border-gray-300 rounded-lg w-full md:col-span-2 focus:ring-2 focus:ring-red-500 focus:border-red-500"
             />
             <button
@@ -88,7 +131,7 @@ export default function BikesPage() {
             </button>
             <select
               value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
+              onChange={(e) => handleSortChange(e.target.value)}
               className="p-3 border border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-red-500 focus:border-red-500"
             >
               <option value="">Sort By</option>
@@ -150,12 +193,16 @@ export default function BikesPage() {
           </div>
         </div>
 
-        {/* Bikes Grid */}
-        {filteredAndSortedBikes.length > 0 ? (
+        {/* Products Grid */}
+        {loading ? (
+          <div className="text-center py-16">Loading...</div>
+        ) : error ? (
+          <div className="text-center py-16 text-red-600">{error}</div>
+        ) : products.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {filteredAndSortedBikes.map((bike, index) => (
-              <div key={bike.id} className={styles.card} style={{ animationDelay: `${index * 100}ms` }}>
-                <BikeCard bike={bike} />
+            {products.map((product, index) => (
+              <div key={product.id} className={styles.card} style={{ animationDelay: `${index * 100}ms` }}>
+                <BikeCard bike={product} /> {/* Assume BikeCard handles Product */}
               </div>
             ))}
           </div>
@@ -163,6 +210,27 @@ export default function BikesPage() {
           <div className="text-center py-16">
             <h2 className="text-2xl font-semibold">No bikes found</h2>
             <p className="text-gray-600 mt-2">Try adjusting your search or filter criteria to find your dream bike.</p>
+          </div>
+        )}
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex justify-center mt-8 gap-4">
+            <button
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 0))}
+              disabled={currentPage === 0}
+              className="p-2 bg-gray-300 rounded disabled:opacity-50"
+            >
+              Previous
+            </button>
+            <span>Page {currentPage + 1} of {totalPages}</span>
+            <button
+              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages - 1))}
+              disabled={currentPage === totalPages - 1}
+              className="p-2 bg-gray-300 rounded disabled:opacity-50"
+            >
+              Next
+            </button>
           </div>
         )}
       </div>

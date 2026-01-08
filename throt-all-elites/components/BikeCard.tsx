@@ -1,5 +1,5 @@
 import styles from './BikeCard.module.css'; 
-import { Bike } from '../interfaces/Bike';
+import { Bike } from '../interfaces/Product';
 
 interface BikeCardProps {
   bike: Bike;
