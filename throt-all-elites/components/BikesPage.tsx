@@ -1,7 +1,7 @@
 'use client';
 import { api } from '@/lib/api';
 import { useState, useEffect, useMemo } from 'react';
-import BikeCard from '../components/BikeCard'; // Assume updated to ProductCard or handle Product
+import BikeCard from '../components/BikeCard';
 import { Product } from '../interfaces/Product';
 import styles from '../components/Bikes.module.css';
 
@@ -18,12 +18,10 @@ export default function BikesPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch unique brands and types from backend (or hardcoded if no endpoint)
   const [brands, setBrands] = useState<string[]>([]);
   const [types, setTypes] = useState<string[]>([]);
 
   useEffect(() => {
-    // Fetch all products without filters to extract unique brands/types
     const fetchOptions = async () => {
       try {
         const res = await fetch(`${api.products}?page=${currentPage}&size=12&sortBy=price&sortDir=asc`);
