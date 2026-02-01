@@ -16,7 +16,7 @@ export default function ClientBikes({ initialData }: Props) {
   const [products, setProducts] = useState<Product[]>(initialData.bikes);
   const [totalPages, setTotalPages] = useState(initialData.totalPages);
   const [currentPage, setCurrentPage] = useState(0);
-  const [selectedBike, setSelectedBike] = useState<Product | null>(null); // ← new state for modal
+  const [selectedBike, setSelectedBike] = useState<Product | null>(null); 
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
