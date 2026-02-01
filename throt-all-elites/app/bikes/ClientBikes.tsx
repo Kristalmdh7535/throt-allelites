@@ -3,9 +3,9 @@
 
 import { useState, useEffect, useTransition } from 'react';
 import BikeCard from '@/components/BikeCard';
+import BikeDetailModal from '@/components/BikeDetailModal'; // ← new import
 import styles from '@/components/Bikes.module.css';
-import { Product } from '@/interfaces/Product';  // ← your real type
-
+import { Product } from '@/interfaces/Product';
 import { InitialData } from './page';
 
 interface Props {
@@ -16,6 +16,7 @@ export default function ClientBikes({ initialData }: Props) {
   const [products, setProducts] = useState<Product[]>(initialData.bikes);
   const [totalPages, setTotalPages] = useState(initialData.totalPages);
   const [currentPage, setCurrentPage] = useState(0);
+  const [selectedBike, setSelectedBike] = useState<Product | null>(null); // ← new state for modal
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
@@ -221,7 +222,8 @@ export default function ClientBikes({ initialData }: Props) {
               {products.map(product => (
                 <div
                   key={product.id}
-                  className="transform transition-all duration-300 hover:-translate-y-2"
+                  className="transform transition-all duration-300 hover:-translate-y-2 cursor-pointer"
+                  onClick={() => setSelectedBike(product)} // ← this opens the modal
                 >
                   <BikeCard bike={product} />
                 </div>
@@ -254,6 +256,14 @@ export default function ClientBikes({ initialData }: Props) {
           </>
         )}
       </div>
+
+      {/* Modal – only shown when a bike is selected */}
+      {selectedBike && (
+        <BikeDetailModal
+          bike={selectedBike}
+          onClose={() => setSelectedBike(null)}
+        />
+      )}
     </div>
   );
 }
