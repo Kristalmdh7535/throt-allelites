@@ -196,7 +196,7 @@ export default function AdminBikesClient() {
     }
   };
 
-  const commonBrands = ['Ducati', 'BMW', 'MV Agusta', 'Yamaha', 'Aprilia', 'Suzuki', 'Kawasaki', 'Honda', 'KTM', 'Triumph'];
+  const commonBrands = ['Ducati', 'BMW', 'MV Agusta', 'Yamaha', 'Aprilia', 'Suzuki', 'Kawasaki', 'Honda', 'KTM', 'Harley Davidson'];
   const commonTypes = ['Sport', 'Naked', 'Cruiser', 'Touring', 'Adventure', 'Standard', 'Dual-Sport'];
 
   if (!token) return null;

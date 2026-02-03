@@ -1,9 +1,8 @@
-// app/bikes/ClientBikes.tsx
 'use client';
 
 import { useState, useEffect, useTransition } from 'react';
 import BikeCard from '@/components/BikeCard';
-import BikeDetailModal from '@/components/BikeDetailModal'; // ← new import
+import BikeDetailModal from '@/components/BikeDetailModal'; 
 import styles from '@/components/Bikes.module.css';
 import { Product } from '@/interfaces/Product';
 import { InitialData } from './page';
