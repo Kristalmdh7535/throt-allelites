@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -22,6 +23,11 @@ export default function RootLayout({
         <Navbar />
         <main>{children}</main>
         <Footer />
+
+        <Script
+          src="https://embed.tawk.to/6992a97c3a5ba51c3b88d17a/1jhiec4fo"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
