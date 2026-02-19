@@ -3,14 +3,14 @@ import { Metadata } from 'next';
 import { Suspense } from 'react';
 import ClientBikes from './ClientBikes';
 import BikesLoadingSkeleton from './BikesLoadingSkeleton';
-import { Product } from '@/interfaces/Product';  // ← import your real type
+import { Product } from '@/interfaces/Product';  
 
 export const metadata: Metadata = {
   title: 'Bike Collection | Throt All Elites',
   description: 'Explore premium superbikes, naked bikes, adventure and cruiser motorcycles.',
 };
 
-export const revalidate = 1800; // 30 minutes
+export const revalidate = 1800; 
 
 interface ApiPageResponse {
   content: Product[];
@@ -34,7 +34,7 @@ async function getInitialData(): Promise<InitialData> {
     const params = new URLSearchParams({
       page: '0',
       size: '12',
-      sortBy: 'id',           // safe default (assuming id is your PK)
+      sortBy: 'id',          
       sortDir: 'desc',
     });
 
