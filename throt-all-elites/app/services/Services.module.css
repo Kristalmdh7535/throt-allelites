@@ -1,12 +1,5 @@
-/* ═══════════════════════════════════════════
-   THROT-ALL ELITES — SERVICES PAGE
-   Layout : Horizontal full-width bands
-   Aesthetic: Dark aggressive · Red · Big numbers
-   ═══════════════════════════════════════════ */
-
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap');
 
-/* ── Tokens ── */
 .page {
   --red:      #dc2626;
   --red-hot:  #ef4444;
@@ -28,7 +21,6 @@
   overflow-x: hidden;
 }
 
-/* ── Grain ── */
 .grain {
   position: fixed;
   inset: 0;
@@ -39,9 +31,6 @@
   background-size: 200px;
 }
 
-/* ══════════════════════════════════
-   HERO
-══════════════════════════════════ */
 .hero {
   position: relative;
   z-index: 1;
@@ -131,9 +120,6 @@
   animation: fadeUp 0.8s 0.25s ease both;
 }
 
-/* ══════════════════════════════════
-   SECTION BAND
-══════════════════════════════════ */
 .band {
   position: relative;
   z-index: 1;
@@ -168,7 +154,6 @@
   background: linear-gradient(to bottom, transparent, var(--red), transparent);
 }
 
-/* Giant ghost section number */
 .sectionNum {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: clamp(6rem, 14vw, 13rem);
@@ -216,7 +201,6 @@
   max-width: 44ch;
 }
 
-/* Stat pill */
 .statPill {
   display: inline-flex;
   align-items: baseline;
@@ -246,9 +230,6 @@
   color: var(--mist);
 }
 
-/* ══════════════════════════════════
-   FORM CONTROLS
-══════════════════════════════════ */
 .select {
   width: 100%;
   padding: 0.9rem 0.25rem;
@@ -299,7 +280,6 @@
 
 .input:focus { border-bottom-color: var(--red); }
 
-/* ── Buttons ── */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -361,9 +341,6 @@
   margin-top: 1.75rem;
 }
 
-/* ══════════════════════════════════
-   COMPARISON TABLE
-══════════════════════════════════ */
 .selectors {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -429,9 +406,6 @@
   border-radius: 2px;
 }
 
-/* ══════════════════════════════════
-   EMI RESULT
-══════════════════════════════════ */
 .emiGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -508,9 +482,6 @@
   margin-top: 0.15rem;
 }
 
-/* ══════════════════════════════════
-   DELIVERY FEATURES
-══════════════════════════════════ */
 .featureList {
   list-style: none;
   padding: 0;
@@ -559,9 +530,6 @@
   font-weight: 300;
 }
 
-/* ══════════════════════════════════
-   TEST RIDE STEPS
-══════════════════════════════════ */
 .steps {
   display: flex;
   flex-direction: column;
@@ -603,9 +571,7 @@
   font-weight: 300;
 }
 
-/* ══════════════════════════════════
-   LOADING / ERROR
-══════════════════════════════════ */
+
 .loading {
   display: flex;
   align-items: center;
@@ -636,9 +602,6 @@
   border-radius: 2px;
 }
 
-/* ══════════════════════════════════
-   ANIMATIONS
-══════════════════════════════════ */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(22px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -653,9 +616,6 @@
   to { transform: rotate(360deg); }
 }
 
-/* ══════════════════════════════════
-   RESPONSIVE
-══════════════════════════════════ */
 @media (max-width: 1024px) {
   .bandInner {
     grid-template-columns: 1fr;

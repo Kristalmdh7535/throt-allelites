@@ -10,8 +10,6 @@ export default function ServicesPage() {
   return (
     <main className={styles.page}>
       <div className={styles.grain} aria-hidden="true" />
-
-      {/* ── Hero ── */}
       <section className={styles.hero}>
         <div className={styles.heroInner}>
           <p className={styles.heroEyebrow}>Throt-All Elites</p>
@@ -27,7 +25,6 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* ── Sections in order ── */}
       <BikeComparison />
       <EmiCalculator />
       <TestRideInfo />

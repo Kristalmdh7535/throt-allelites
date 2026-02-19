@@ -6,8 +6,6 @@ export default function TestRideInfo() {
   return (
     <section className={styles.band}>
       <div className={styles.bandInner}>
-
-        {/* LEFT — meta */}
         <div className={styles.bandMeta}>
           <span className={styles.sectionNum}>03</span>
           <span className={styles.bandLabel}>— Before You Buy</span>
@@ -25,7 +23,6 @@ export default function TestRideInfo() {
           </div>
         </div>
 
-        {/* RIGHT — steps + CTA */}
         <div className={styles.bandWidget}>
           <div className={styles.steps}>
             <div className={styles.step}>
