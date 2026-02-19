@@ -1,14 +1,16 @@
-// app/dashboard/bikes/AdminBikesClient.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '../(auth)/contexts/AuthContext';
 import { Product } from '@/interfaces/Product';
 import styles from '@/app/dashboard/Admin.module.css';
 
 const BACKEND_URL = 'http://localhost:8080/api/products';
 
 export default function AdminBikesClient() {
+  const { user, isAuthenticated } = useAuth();
+  const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -21,12 +23,16 @@ export default function AdminBikesClient() {
   const [confirmDeleteId, setConfirmDeleteId] = useState<number | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
-  const router = useRouter();
   const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
 
   useEffect(() => {
-    if (!token) {
-      router.push('/auth/login');
+    if (!token || !isAuthenticated) {
+      router.push('/login');
+      return;
+    }
+
+    if (user?.role !== 'ADMIN') {
+      router.push('/');
       return;
     }
 
@@ -42,7 +48,7 @@ export default function AdminBikesClient() {
 
         if (res.status === 401 || res.status === 403) {
           localStorage.removeItem('accessToken');
-          router.push('/auth/login');
+          router.push('/login');
           return;
         }
 
@@ -58,7 +64,7 @@ export default function AdminBikesClient() {
     };
 
     fetchProducts();
-  }, [token, router]);
+  }, [token, router, isAuthenticated, user?.role]);
 
   const openAddModal = () => {
     setSelectedProduct({ stock: 0, price: 0 });
@@ -92,7 +98,7 @@ export default function AdminBikesClient() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!token) {
-      router.push('/auth/login');
+      router.push('/login');
       return;
     }
 
@@ -126,7 +132,7 @@ export default function AdminBikesClient() {
 
       if (res.status === 401 || res.status === 403) {
         localStorage.removeItem('accessToken');
-        router.push('/auth/login');
+        router.push('/login');
         return;
       }
 
@@ -135,22 +141,18 @@ export default function AdminBikesClient() {
         throw new Error(`Save failed: ${res.status} - ${text}`);
       }
 
-      // Success - close modal
       setIsModalOpen(false);
 
-      // Re-fetch the updated/created product to get fresh images array
       const updatedRes = await fetch(`${BACKEND_URL}/${selectedProduct.id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
       if (updatedRes.ok) {
         const updatedProduct = await updatedRes.json();
-        // Update only this product in local state (instant image update)
         setProducts(prev =>
           prev.map(p => (p.id === updatedProduct.id ? updatedProduct : p))
         );
       } else {
-        // Fallback: full refresh if single fetch fails
         const refreshRes = await fetch(`${BACKEND_URL}?size=1000`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -158,7 +160,6 @@ export default function AdminBikesClient() {
         setProducts(data.content || []);
       }
 
-      // Reset form state
       setSelectedProduct({ stock: 0, price: 0 });
     } catch (err) {
       setError((err as Error).message || 'Failed to save bike');
@@ -169,7 +170,7 @@ export default function AdminBikesClient() {
 
   const handleDelete = async (id: number) => {
     if (!token) {
-      router.push('/auth/login');
+      router.push('/login');
       return;
     }
 
@@ -183,7 +184,7 @@ export default function AdminBikesClient() {
 
       if (res.status === 401 || res.status === 403) {
         localStorage.removeItem('accessToken');
-        router.push('/auth/login');
+        router.push('/login');
         return;
       }
 
@@ -199,7 +200,7 @@ export default function AdminBikesClient() {
   const commonBrands = ['Ducati', 'BMW', 'MV Agusta', 'Yamaha', 'Aprilia', 'Suzuki', 'Kawasaki', 'Honda', 'KTM', 'Harley Davidson'];
   const commonTypes = ['Sport', 'Naked', 'Cruiser', 'Touring', 'Adventure', 'Standard', 'Dual-Sport'];
 
-  if (!token) return null;
+  if (!token || !isAuthenticated || user?.role !== 'ADMIN') return null;
 
   return (
     <div className={styles.container}>
@@ -270,7 +271,6 @@ export default function AdminBikesClient() {
             </h2>
             <form onSubmit={handleSubmit}>
               <div className={styles.formGrid}>
-                {/* Basic Information */}
                 <input
                   name="name"
                   value={selectedProduct.name || ''}
@@ -315,8 +315,6 @@ export default function AdminBikesClient() {
                   className={styles.input}
                   disabled={submitting}
                 />
-
-                {/* Engine & Power */}
                 <input
                   name="engineCapacityCc"
                   type="number"
@@ -354,8 +352,6 @@ export default function AdminBikesClient() {
                   className={styles.input}
                   disabled={submitting}
                 />
-
-                {/* Performance */}
                 <input
                   name="mileageKmpl"
                   value={selectedProduct.mileageKmpl || ''}
@@ -380,8 +376,6 @@ export default function AdminBikesClient() {
                   className={styles.input}
                   disabled={submitting}
                 />
-
-                {/* Brakes & Suspension */}
                 <input
                   name="clutchType"
                   value={selectedProduct.clutchType || ''}
@@ -422,8 +416,6 @@ export default function AdminBikesClient() {
                   className={styles.input}
                   disabled={submitting}
                 />
-
-                {/* Tyres & Dimensions */}
                 <input
                   name="frontTyre"
                   value={selectedProduct.frontTyre || ''}
@@ -480,8 +472,6 @@ export default function AdminBikesClient() {
                   className={styles.input}
                   disabled={submitting}
                 />
-
-                {/* Price & Stock */}
                 <input
                   name="price"
                   type="number"
