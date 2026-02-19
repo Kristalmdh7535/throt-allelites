@@ -13,37 +13,52 @@ interface User {
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
+  isLoading: boolean;
   login: (token: string, userData: { id: number; name: string; email: string; role: string }) => void;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+const TOKEN_KEY = 'accessToken';
+const USER_KEY = 'authUser';
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [isMounted, setIsMounted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); 
   const router = useRouter();
 
   useEffect(() => {
-    setIsMounted(true);
+    try {
+      const token = localStorage.getItem(TOKEN_KEY);
+      const storedUser = localStorage.getItem(USER_KEY);
+
+      if (token && storedUser) {
+        const parsedUser: User = JSON.parse(storedUser);
+        setUser(parsedUser);
+      } else {
+        localStorage.removeItem(TOKEN_KEY);
+        localStorage.removeItem(USER_KEY);
+      }
+    } catch {
+      localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(USER_KEY);
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
-  useEffect(() => {
-    if (isMounted) {
-      const token = localStorage.getItem('accessToken');
-      if (token && !user) {
-      }
-    }
-  }, [isMounted, user]);
-
-  const login = (token: string, userData: { id: number; name: string; email: string; role: string }) => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('accessToken', token);
-    }
+  const login = (
+    token: string,
+    userData: { id: number; name: string; email: string; role: string }
+  ) => {
     const fullUser: User = {
       ...userData,
       role: userData.role as 'USER' | 'ADMIN',
     };
+
+    localStorage.setItem(TOKEN_KEY, token);
+    localStorage.setItem(USER_KEY, JSON.stringify(fullUser));
     setUser(fullUser);
 
     if (fullUser.role === 'ADMIN') {
@@ -54,17 +69,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = () => {
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('accessToken');
-    }
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(USER_KEY);
     setUser(null);
     router.push('/');
   };
 
-  const isAuthenticated = isMounted && (!!user || (typeof window !== 'undefined' && !!localStorage.getItem('accessToken')));
+  const isAuthenticated = !isLoading && !!user && !!localStorage.getItem(TOKEN_KEY);
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, isLoading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

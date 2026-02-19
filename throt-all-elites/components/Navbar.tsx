@@ -5,11 +5,12 @@ import { useAuth } from '../app/(auth)/contexts/AuthContext';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
-  const { user, logout, isAuthenticated } = useAuth();
+  const { user, logout, isAuthenticated, isLoading } = useAuth();
 
   return (
     <nav className={styles.navbar}>
       <div className={styles.container}>
+
         <Link href="/" className={styles.logoLink}>
           <img
             src="/images/motorbike.jpg"
@@ -24,14 +25,18 @@ export default function Navbar() {
           <Link href="/bikes" className={styles.navLink}>Bikes</Link>
           <Link href="/services" className={styles.navLink}>Services</Link>
           <Link href="/contact" className={styles.navLink}>Contact</Link>
+        </div>
 
-          {isAuthenticated ? (
+        <div className={styles.authSection}>
+          {isLoading ? (
+            <div className={styles.skeleton} aria-hidden="true" />
+          ) : isAuthenticated && user ? (
             <div className={styles.userSection}>
               <div className={styles.avatar}>
-                {user?.name.charAt(0).toUpperCase() || 'U'}
+                {user.name.charAt(0).toUpperCase()}
               </div>
               <span className={styles.userName}>
-                {user?.name} <small>({user?.role})</small>
+                {user.name} <small>({user.role})</small>
               </span>
               <button onClick={logout} className={styles.logoutBtn}>
                 Logout
@@ -41,6 +46,7 @@ export default function Navbar() {
             <Link href="/login" className={styles.navLink}>Sign In</Link>
           )}
         </div>
+
       </div>
     </nav>
   );
