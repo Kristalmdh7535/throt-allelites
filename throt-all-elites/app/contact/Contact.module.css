@@ -1,11 +1,11 @@
 /* ═══════════════════════════════════════════
    THROT-ALL ELITES — CONTACT PAGE
-   Aesthetic: Industrial garage · Dark · Red chrome
+   Aesthetic: Industrial garage · Dark hero · Clean form panel
    ═══════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap');
 
-/* ── Tokens ── */
+/* ── Design tokens ── */
 .page {
   --red:       #dc2626;
   --red-hot:   #ef4444;
@@ -19,6 +19,13 @@
   --mist:      #8a8a8a;
   --white:     #f5f5f5;
 
+  /* form panel tokens */
+  --panel-bg:  #ffffff;
+  --panel-text:#1a1a2e;
+  --panel-sub: #6c757d;
+  --panel-border: #dee2e6;
+  --panel-focus: var(--red);
+
   font-family: 'DM Sans', sans-serif;
   background-color: var(--black);
   color: var(--white);
@@ -26,13 +33,13 @@
   position: relative;
 }
 
-/* ── Grain overlay ── */
+/* ── Grain texture ── */
 .grain {
   pointer-events: none;
   position: fixed;
   inset: 0;
   z-index: 0;
-  opacity: 0.035;
+  opacity: 0.03;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 200px 200px;
 }
@@ -49,33 +56,32 @@
   gap: 0;
   padding: 0 6vw;
   overflow: hidden;
-  background:
-    linear-gradient(135deg, #0a0a0a 55%, #1a0000 100%);
+  background: linear-gradient(135deg, #0a0a0a 55%, #1a0000 100%);
   z-index: 1;
 }
 
-/* Diagonal slash behind everything */
 .heroSlash {
   position: absolute;
   top: -10%;
   left: 50%;
-  width: 6px;
+  width: 5px;
   height: 130%;
   background: var(--red);
   transform: rotate(8deg);
   transform-origin: top center;
-  opacity: 0.9;
+  opacity: 0.85;
   z-index: 0;
-  box-shadow: 0 0 40px 4px rgba(220, 38, 38, 0.5);
+  box-shadow: 0 0 40px 6px rgba(220, 38, 38, 0.45);
 }
 
 .heroSlash::before {
   content: '';
   position: absolute;
-  top: 0; left: 14px;
+  top: 0;
+  left: 12px;
   width: 2px;
   height: 100%;
-  background: rgba(220,38,38,0.3);
+  background: rgba(220, 38, 38, 0.25);
 }
 
 .heroInner {
@@ -87,8 +93,8 @@
 
 .heroEyebrow {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 0.85rem;
-  letter-spacing: 0.35em;
+  font-size: 0.82rem;
+  letter-spacing: 0.38em;
   text-transform: uppercase;
   color: var(--red);
   margin: 0 0 1.5rem;
@@ -107,9 +113,7 @@
 
 .heroAccent {
   color: var(--red);
-  -webkit-text-stroke: 2px var(--red);
   display: inline-block;
-  position: relative;
 }
 
 .heroDivider {
@@ -121,7 +125,7 @@
 
 .heroSub {
   font-size: 1.05rem;
-  line-height: 1.7;
+  line-height: 1.75;
   color: var(--mist);
   max-width: 38ch;
   font-weight: 300;
@@ -152,172 +156,182 @@
 .infoCard:hover {
   border-left-color: var(--yellow);
   background: var(--iron);
-  transform: translateX(4px);
+  transform: translateX(5px);
 }
 
 .infoIcon {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   flex-shrink: 0;
   margin-top: 2px;
 }
 
 .infoLabel {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--red);
   margin: 0 0 0.3rem;
 }
 
 .infoValue {
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   color: var(--white);
   margin: 0;
   line-height: 1.5;
-  font-weight: 400;
 }
 
 /* ══════════════════════════════════
-   FORM SECTION
+   CONTACT SECTION (form + map)
 ══════════════════════════════════ */
-.formSection {
+.contactSection {
   position: relative;
   z-index: 1;
-  background: var(--charcoal);
-  padding: 7rem 6vw;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 4rem;
-  align-items: start;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a0000 100%);
+  padding: 6rem 0;
   border-top: 1px solid var(--iron);
 }
 
-.formWrapper {
-  max-width: 760px;
-  width: 100%;
+.contactContainer {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
-.formHeader {
-  margin-bottom: 2.5rem;
+/* White card that holds both columns */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  background: var(--panel-bg);
+  border-radius: 4px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Red top accent line on the card */
+.grid::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--red);
+  z-index: 2;
+}
+
+/* ── Form Side ── */
+.formSide {
+  display: flex;
+  flex-direction: column;
+  padding: 3.5rem 3rem;
+  border-right: 1px solid #f0f0f0;
 }
 
 .formTag {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 0.8rem;
-  letter-spacing: 0.3em;
+  font-size: 0.78rem;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--red);
   display: block;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.6rem;
 }
 
 .formTitle {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: 2.6rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--white);
-  margin: 0;
-  line-height: 1;
   letter-spacing: -0.01em;
+  color: var(--panel-text);
+  margin: 0 0 0.75rem;
+  line-height: 1;
 }
 
-/* ── Form layout ── */
+.formSubtitle {
+  font-size: 1rem;
+  color: var(--panel-sub);
+  line-height: 1.6;
+  margin: 0 0 2rem;
+  font-weight: 300;
+}
+
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
+}
+
+.formFields {
+  display: grid;
+  gap: 0;
 }
 
 .row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.4rem;
+  gap: 0;
 }
 
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.label {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 0.78rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--mist);
-}
-
+/* Underline inputs — your style, recoloured */
 .input,
 .textarea {
-  background: var(--steel);
-  border: 1px solid var(--smoke);
-  border-bottom: 2px solid var(--smoke);
-  color: var(--white);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.95rem;
-  padding: 0.85rem 1rem;
-  border-radius: 2px;
-  outline: none;
-  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
   width: 100%;
+  padding: 14px 4px;
+  border: none;
+  border-bottom: 2px solid var(--panel-border);
+  font-size: 0.95rem;
+  color: var(--panel-text);
+  background: transparent;
+  transition: border-color 0.25s ease;
+  font-family: 'DM Sans', sans-serif;
   box-sizing: border-box;
-  appearance: none;
 }
 
 .input::placeholder,
 .textarea::placeholder {
-  color: var(--smoke);
+  color: #b0b7c3;
+  font-weight: 300;
 }
 
 .input:focus,
 .textarea:focus {
-  border-color: var(--red);
   border-bottom-color: var(--red);
-  background: #1f1f1f;
-  box-shadow: 0 4px 20px rgba(220, 38, 38, 0.12);
+  outline: none;
 }
 
-/* Style select arrow */
-.input[type="text"] ~ .input,
-select.input {
-  cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a8a8a' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 1rem center;
-  padding-right: 2.5rem;
-}
-
-select.input option {
-  background: var(--steel);
-  color: var(--white);
+.row .input:first-child {
+  border-right: 1px solid #f5f5f5;
 }
 
 .textarea {
   resize: vertical;
-  min-height: 130px;
+  min-height: 110px;
+  margin-top: 4px;
 }
 
-/* ── Submit button ── */
+/* Submit button */
 .submitBtn {
-  display: inline-flex;
+  margin-top: 2rem;
+  display: flex;
   align-items: center;
-  gap: 0.75rem;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px;
   background: var(--red);
-  color: var(--white);
+  color: white;
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 1.05rem;
   font-weight: 700;
-  letter-spacing: 0.15em;
+  font-size: 1.05rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   border: none;
-  padding: 1rem 2.2rem;
   border-radius: 2px;
   cursor: pointer;
   transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-  align-self: flex-start;
   position: relative;
   overflow: hidden;
 }
@@ -326,7 +340,7 @@ select.input option {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
   transform: translateX(-100%);
   transition: transform 0.4s ease;
 }
@@ -338,197 +352,64 @@ select.input option {
 .submitBtn:hover {
   background: var(--red-hot);
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(220, 38, 38, 0.4);
+  box-shadow: 0 8px 28px rgba(220, 38, 38, 0.35);
 }
 
 .submitBtn:active {
   transform: translateY(0);
 }
 
-.submitArrow {
-  width: 1.1rem;
-  height: 1.1rem;
-  transition: transform 0.2s;
-}
-
-.submitBtn:hover .submitArrow {
-  transform: translateX(4px);
-}
-
-/* ── Success state ── */
-.successBox {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 4rem 2rem;
-  background: var(--steel);
-  border: 1px solid var(--smoke);
-  border-top: 3px solid var(--red);
-  border-radius: 2px;
-  gap: 1rem;
-  animation: fadeUp 0.5s ease both;
-}
-
-.successIcon {
-  font-size: 3.5rem;
-}
-
-.successTitle {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 2.5rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--yellow);
-  margin: 0;
-}
-
-.successText {
-  color: var(--mist);
-  max-width: 40ch;
-  line-height: 1.6;
-  margin: 0;
-}
-
-.resetBtn {
-  margin-top: 0.5rem;
-  background: transparent;
-  color: var(--red);
-  border: 1px solid var(--red);
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 0.9rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  padding: 0.6rem 1.5rem;
-  border-radius: 2px;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-}
-
-.resetBtn:hover {
-  background: var(--red);
-  color: var(--white);
-}
-
-/* ── Rev graphic (decorative) ── */
-.revGraphic {
-  position: relative;
-  width: 160px;
-  height: 160px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.sendIcon {
+  fill: currentColor;
   flex-shrink: 0;
-  margin-top: 5rem;
 }
 
-.revRing {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid var(--iron);
-  animation: spin 20s linear infinite;
+/* Contact info list below button */
+.contactList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  padding: 0;
+  list-style: none;
 }
 
-.revRing:nth-child(1) {
-  inset: 0;
-  border-top-color: var(--red);
-  border-width: 2px;
-  animation-duration: 8s;
-}
-
-.revRing:nth-child(2) {
-  inset: 20px;
-  border-right-color: var(--yellow);
-  animation-direction: reverse;
-  animation-duration: 14s;
-}
-
-.revRing:nth-child(3) {
-  inset: 40px;
-  border-bottom-color: var(--red-dim);
-  animation-duration: 20s;
-}
-
-.revText {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 0.7rem;
-  letter-spacing: 0.4em;
-  color: var(--smoke);
-  text-transform: uppercase;
-  position: relative;
-  z-index: 1;
-}
-
-/* ══════════════════════════════════
-   MAP SECTION
-══════════════════════════════════ */
-.mapSection {
-  position: relative;
-  z-index: 1;
-  padding: 5rem 6vw 0;
-  background: var(--black);
-  border-top: 1px solid var(--iron);
-}
-
-.mapLabel {
-  margin-bottom: 2rem;
-}
-
-.mapTag {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 0.8rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
+.contactItem {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
   color: var(--red);
-  display: block;
-  margin-bottom: 0.5rem;
 }
 
-.mapTitle {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: clamp(2rem, 3.5vw, 3rem);
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--white);
-  margin: 0;
+.contactIcon {
+  fill: var(--red);
+  flex-shrink: 0;
 }
 
-.mapPlaceholder {
+.contactLink {
+  color: var(--panel-text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.contactLink:hover {
+  color: var(--red);
+}
+
+/* ── Map Side ── */
+.mapSide {
+  height: 100%;
+  min-height: 600px;
+  overflow: hidden;
+}
+
+.mapSide iframe {
   width: 100%;
-  height: 400px;
-  background: var(--steel);
-  border: 1px solid var(--iron);
-  border-top: 3px solid var(--red);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 2px;
-  margin-bottom: 0;
-}
-
-.mapInner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--mist);
-  text-align: center;
-}
-
-.mapPin {
-  font-size: 2.5rem;
-}
-
-.mapInner p {
-  margin: 0;
-  font-size: 1rem;
-  color: var(--white);
-}
-
-.mapInner small {
-  color: var(--smoke);
-  font-size: 0.8rem;
+  height: 100%;
+  border: none;
+  display: block;
 }
 
 /* ══════════════════════════════════
@@ -539,13 +420,26 @@ select.input option {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
 /* ══════════════════════════════════
    RESPONSIVE
 ══════════════════════════════════ */
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .formSide {
+    border-right: none;
+    border-bottom: 1px solid #f0f0f0;
+    padding: 2.5rem 2rem;
+  }
+
+  .mapSide {
+    min-height: 420px;
+    height: 420px;
+  }
+}
+
 @media (max-width: 900px) {
   .hero {
     grid-template-columns: 1fr;
@@ -561,15 +455,6 @@ select.input option {
   .heroInner {
     padding-right: 0;
   }
-
-  .formSection {
-    grid-template-columns: 1fr;
-    padding: 4rem 6vw;
-  }
-
-  .revGraphic {
-    display: none;
-  }
 }
 
 @media (max-width: 600px) {
@@ -579,5 +464,9 @@ select.input option {
 
   .heroTitle {
     font-size: clamp(4rem, 18vw, 6rem);
+  }
+
+  .formSide {
+    padding: 2rem 1.25rem;
   }
 }

@@ -1,37 +1,12 @@
 'use client';
 
-import { useState } from 'react';
 import styles from './Contact.module.css';
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: '',
-  });
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: wire up to your API
-    setSubmitted(true);
-  };
-
   return (
     <main className={styles.page}>
-
-      {/* ── Noise grain overlay ── */}
       <div className={styles.grain} aria-hidden="true" />
 
-      {/* ── Hero strip ── */}
       <section className={styles.hero}>
         <div className={styles.heroInner}>
           <p className={styles.heroEyebrow}>Throt-All Elites</p>
@@ -47,181 +22,158 @@ export default function Contact() {
           </p>
         </div>
 
-        {/* diagonal red slash */}
         <div className={styles.heroSlash} aria-hidden="true" />
 
-        {/* info cards stacked on the right */}
         <div className={styles.infoStack}>
           <div className={styles.infoCard}>
             <span className={styles.infoIcon}>📍</span>
             <div>
               <p className={styles.infoLabel}>Find Us</p>
-              <p className={styles.infoValue}>Baneshwor, Kathmandu</p>
-              <p className={styles.infoValue}>Bagmati Province, Nepal</p>
+              <p className={styles.infoValue}>Tindobato, Banepa</p>
             </div>
           </div>
           <div className={styles.infoCard}>
             <span className={styles.infoIcon}>📞</span>
             <div>
               <p className={styles.infoLabel}>Call / WhatsApp</p>
-              <p className={styles.infoValue}>+977 98XX-XXXXXX</p>
+              <p className={styles.infoValue}>+977 9823141414</p>
             </div>
           </div>
           <div className={styles.infoCard}>
             <span className={styles.infoIcon}>🕐</span>
             <div>
               <p className={styles.infoLabel}>Showroom Hours</p>
-              <p className={styles.infoValue}>Sun – Fri &nbsp;·&nbsp; 9 AM – 6 PM</p>
-              <p className={styles.infoValue}>Saturday &nbsp;·&nbsp; 10 AM – 4 PM</p>
+              <p className={styles.infoValue}>Sun – Fri · 9 AM – 6 PM</p>
+              <p className={styles.infoValue}>Saturday · 10 AM – 4 PM</p>
             </div>
           </div>
           <div className={styles.infoCard}>
             <span className={styles.infoIcon}>✉️</span>
             <div>
               <p className={styles.infoLabel}>Email</p>
-              <p className={styles.infoValue}>hello@throtelites.com</p>
+              <p className={styles.infoValue}>throtallelites@gmail.com</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── Form section ── */}
-      <section className={styles.formSection}>
-        <div className={styles.formWrapper}>
-
-          <div className={styles.formHeader}>
-            <span className={styles.formTag}>— Drop a message</span>
-            <h2 className={styles.formTitle}>Rev Up the Conversation</h2>
-          </div>
-
-          {submitted ? (
-            <div className={styles.successBox}>
-              <span className={styles.successIcon}>🏍️</span>
-              <h3 className={styles.successTitle}>Message Received!</h3>
-              <p className={styles.successText}>
-                We'll get back to you faster than a Hayabusa on an open highway.
+      <section className={styles.contactSection}>
+        <div className={styles.contactContainer}>
+          <div className={styles.grid}>
+            <div className={styles.formSide}>
+              <span className={styles.formTag}>— Drop a message</span>
+              <h2 className={styles.formTitle}>Get In Touch</h2>
+              <p className={styles.formSubtitle}>
+                Have a specific inquiry? Our experienced team is ready to roll.
               </p>
-              <button
-                className={styles.resetBtn}
-                onClick={() => { setSubmitted(false); setFormData({ name: '', email: '', phone: '', subject: '', message: '' }); }}
-              >
-                Send Another
-              </button>
-            </div>
-          ) : (
-            <form className={styles.form} onSubmit={handleSubmit} noValidate>
 
-              <div className={styles.row}>
-                <div className={styles.field}>
-                  <label className={styles.label} htmlFor="name">Full Name *</label>
+              <form className={styles.form}>
+                <div className={styles.formFields}>
                   <input
-                    className={styles.input}
-                    id="name"
-                    name="name"
                     type="text"
-                    placeholder="John Rider"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className={styles.field}>
-                  <label className={styles.label} htmlFor="email">Email *</label>
-                  <input
+                    placeholder="Full Name"
                     className={styles.input}
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    value={formData.email}
-                    onChange={handleChange}
                     required
+                    aria-required="true"
                   />
-                </div>
-              </div>
 
-              <div className={styles.row}>
-                <div className={styles.field}>
-                  <label className={styles.label} htmlFor="phone">Phone</label>
                   <input
+                    type="text"
+                    placeholder="Street"
                     className={styles.input}
-                    id="phone"
-                    name="phone"
+                  />
+
+                  <div className={styles.row}>
+                    <input
+                      type="text"
+                      placeholder="City"
+                      className={styles.input}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Postcode"
+                      className={styles.input}
+                    />
+                  </div>
+
+                  <input
                     type="tel"
-                    placeholder="+977 98XX-XXXXXX"
-                    value={formData.phone}
-                    onChange={handleChange}
+                    placeholder="Phone No."
+                    className={styles.input}
+                    required
+                    aria-required="true"
+                  />
+
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    className={styles.input}
+                    required
+                    aria-required="true"
+                  />
+
+                  <textarea
+                    placeholder="Write your message — bike model, budget, questions..."
+                    className={styles.textarea}
+                    rows={5}
+                    required
+                    aria-required="true"
                   />
                 </div>
-                <div className={styles.field}>
-                  <label className={styles.label} htmlFor="subject">I'm interested in…</label>
-                  <select
-                    className={styles.input}
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
+
+                <button type="submit" className={styles.submitBtn}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 548.244 548.244"
+                    className={styles.sendIcon}
                   >
-                    <option value="">Select a topic</option>
-                    <option value="buying">Buying a Bike</option>
-                    <option value="service">Service / Repair</option>
-                    <option value="test-ride">Test Ride</option>
-                    <option value="parts">Parts & Accessories</option>
-                    <option value="other">Something Else</option>
-                  </select>
-                </div>
-              </div>
+                    <path
+                      fillRule="evenodd"
+                      d="M392.19 156.054 211.268 281.667 22.032 218.58C8.823 214.168-.076 201.775 0 187.852c.077-13.923 9.078-26.24 22.338-30.498L506.15 1.549c11.5-3.697 24.123-.663 32.666 7.88 8.542 8.543 11.577 21.165 7.879 32.666L390.89 525.906c-4.258 13.26-16.575 22.261-30.498 22.338-13.923.076-26.316-8.823-30.728-22.032l-63.393-190.153z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  Send Message
+                </button>
+              </form>
 
-              <div className={styles.field}>
-                <label className={styles.label} htmlFor="message">Message *</label>
-                <textarea
-                  className={styles.textarea}
-                  id="message"
-                  name="message"
-                  rows={5}
-                  placeholder="Tell us what you're looking for, your budget, preferred model — anything helps..."
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+              <ul className={styles.contactList}>
+                <li className={styles.contactItem}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 479.058 479.058" className={styles.contactIcon}>
+                    <path d="M434.146 59.882H44.912C20.146 59.882 0 80.028 0 104.794v269.47c0 24.766 20.146 44.912 44.912 44.912h389.234c24.766 0 44.912-20.146 44.912-44.912v-269.47c0-24.766-20.146-44.912-44.912-44.912zm0 29.941c2.034 0 3.969.422 5.738 1.159L239.529 264.631 39.173 90.982a14.902 14.902 0 0 1 5.738-1.159zm0 299.411H44.912c-8.26 0-14.971-6.71-14.971-14.971V122.615l199.778 173.141c2.822 2.441 6.316 3.655 9.81 3.655s6.988-1.213 9.81-3.655l199.778-173.141v251.649c-.001 8.26-6.711 14.97-14.971 14.97z" />
+                  </svg>
+                  <a href="mailto:throtallelites@gmail.com" className={styles.contactLink}>
+                    throtallelites@gmail.com
+                  </a>
+                </li>
+                <li className={styles.contactItem}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 482.6 482.6" className={styles.contactIcon}>
+                    <path d="M98.339 320.8c47.6 56.9 104.9 101.7 170.3 133.4 24.9 11.8 58.2 25.8 95.3 28.2 2.3.1 4.5.2 6.8.2 24.9 0 44.9-8.6 61.2-26.3.1-.1.3-.3.4-.5 5.8-7 12.4-13.3 19.3-20 4.7-4.5 9.5-9.2 14.1-14 21.3-22.2 21.3-50.4-.2-71.9l-60.1-60.1c-10.2-10.6-22.4-16.2-35.2-16.2-12.8 0-25.1 5.6-35.6 16.1l-35.8 35.8c-3.3-1.9-6.7-3.6-9.9-5.2-4-2-7.7-3.9-11-6-32.6-20.7-62.2-47.7-90.5-82.4-14.3-18.1-23.9-33.3-30.6-48.8 9.4-8.5 18.2-17.4 26.7-26.1 3-3.1 6.1-6.2 9.2-9.3 10.8-10.8 16.6-23.3 16.6-36s-5.7-25.2-16.6-36l-29.8-29.8c-3.5-3.5-6.8-6.9-10.2-10.4-6.6-6.8-13.5-13.8-20.3-20.1-10.3-10.1-22.4-15.4-35.2-15.4-12.7 0-24.9 5.3-35.6 15.5l-37.4 37.4c-13.6 13.6-21.3 30.1-22.9 49.2-1.9 23.9 2.5 49.3 13.9 80 17.5 47.5 43.9 91.6 83.1 138.7zm-72.6-216.6c1.2-13.3 6.3-24.4 15.9-34l37.2-37.2c5.8-5.6 12.2-8.5 18.4-8.5 6.1 0 12.3 2.9 18 8.7 6.7 6.2 13 12.7 19.8 19.6 3.4 3.5 6.9 7 10.4 10.6l29.8 29.8c6.2 6.2 9.4 12.5 9.4 18.7s-3.2 12.5-9.4 18.7c-3.1 3.1-6.2 6.3-9.3 9.4-9.3 9.4-18 18.3-27.6 26.8l-.5.5c-8.3 8.3-7 16.2-5 22.2.1.3.2.5.3.8 7.7 18.5 18.4 36.1 35.1 57.1 30 37 61.6 65.7 96.4 87.8 4.3 2.8 8.9 5 13.2 7.2 4 2 7.7 3.9 11 6 .4.2.7.4 1.1.6 3.3 1.7 6.5 2.5 9.7 2.5 8 0 13.2-5.1 14.9-6.8l37.4-37.4c5.8-5.8 12.1-8.9 18.3-8.9 7.6 0 13.8 4.7 17.7 8.9l60.3 60.2c12 12 11.9 25-.3 37.7-4.2 4.5-8.6 8.8-13.3 13.3-7 6.8-14.3 13.8-20.9 21.7-11.5 12.4-25.2 18.2-42.9 18.2-1.7 0-3.5-.1-5.2-.2-32.8-2.1-63.3-14.9-86.2-25.8-62.2-30.1-116.8-72.8-162.1-127-37.3-44.9-62.4-86.7-79-131.5-10.3-27.5-14.2-49.6-12.6-69.7z" />
+                  </svg>
+                  <a href="tel:+9779823141414" className={styles.contactLink}>
+                    +977 9823141414
+                  </a>
+                </li>
+              </ul>
+            </div>
 
-              <button className={styles.submitBtn} type="submit">
-                <span>Send Message</span>
-                <svg className={styles.submitArrow} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </button>
-
-            </form>
-          )}
-        </div>
-
-        {/* decorative rev counter graphic */}
-        <div className={styles.revGraphic} aria-hidden="true">
-          <div className={styles.revRing} />
-          <div className={styles.revRing} />
-          <div className={styles.revRing} />
-          <span className={styles.revText}>RPM</span>
-        </div>
-      </section>
-
-      {/* ── Map placeholder ── */}
-      <section className={styles.mapSection}>
-        <div className={styles.mapLabel}>
-          <span className={styles.mapTag}>— Our Location</span>
-          <h3 className={styles.mapTitle}>Come See Us In Person</h3>
-        </div>
-        <div className={styles.mapPlaceholder}>
-          {/* Replace with <iframe> from Google Maps */}
-          <div className={styles.mapInner}>
-            <span className={styles.mapPin}>📍</span>
-            <p>Baneshwor, Kathmandu</p>
-            <small>Embed your Google Maps iframe here</small>
+            <div className={styles.mapSide}>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3534.58!2d85.5191!3d27.6312!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1d94e2c73b5b%3A0x5fef7aee25e33d2!2sTindobato%2C+Banepa!5e0!3m2!1sen!2snp!4v1730000000000!5m2!1sen!2snp"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Throt-All Elites Showroom - Tindobato, Banepa"
+              />
+            </div>
           </div>
         </div>
       </section>
-
     </main>
   );
 }
