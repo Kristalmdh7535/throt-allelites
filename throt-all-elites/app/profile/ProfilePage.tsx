@@ -39,7 +39,6 @@ export default function ProfilePage() {
 
   const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
 
-  // Auth guard — wait for hydration first
   useEffect(() => {
     if (isLoading) return;
     if (!isAuthenticated) {
@@ -47,7 +46,6 @@ export default function ProfilePage() {
     }
   }, [isLoading, isAuthenticated]);
 
-  // Fetch rides when tab switches to 'rides'
   useEffect(() => {
     if (activeTab !== 'rides' || !token) return;
     fetchRides();
@@ -162,14 +160,6 @@ export default function ProfilePage() {
                     <span className={styles.fieldValue} style={{ color: '#9ca3af' }}>#{user.id}</span>
                   </div>
                 </div>
-              </div>
-
-              <div className={styles.cardSection}>
-                <h2 className={styles.cardSectionTitle}>Authentication</h2>
-                <p className={styles.authNote}>
-                  Your account uses <strong>OTP-based login</strong> via your email address.
-                  No password is stored. Each login sends a one-time code to <strong>{user.email}</strong>.
-                </p>
               </div>
             </div>
           </div>
