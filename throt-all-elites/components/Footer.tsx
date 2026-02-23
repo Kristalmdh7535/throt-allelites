@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={styles.container}>
         <h3 className={styles.title}>Throt-All Elites</h3>
-        <p className={styles.contactInfo}>Contact us: kristalmdhr7535@gmail.com | +977 9823141414</p>
+        <p className={styles.contactInfo}>Contact us: throtallelites@gmail.com | +977 9823141414</p>
         <div className={styles.socialLinks}>
           <a href="#" className={styles.socialLink}>Facebook</a>
           <a href="#" className={styles.socialLink}>Instagram</a>
