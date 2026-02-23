@@ -60,7 +60,7 @@ export default function BikeComparison() {
           </h2>
           <p className={styles.bandDesc}>
             Pick any two bikes from our inventory and see every spec laid out
-            side by side. 🏆 marks the winner on each comparable metric.
+            side by side. 🏆 marks the winner on each category.
           </p>
           <div className={styles.statPill}>
             <span className={styles.statNum}>{bikes.length || '—'}</span>

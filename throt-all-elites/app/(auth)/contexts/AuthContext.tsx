@@ -14,28 +14,31 @@ interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (token: string, userData: { id: number; name: string; email: string; role: string }) => void;
+  login: (
+    token: string,
+    userData: { id: number; name: string; email: string; role: string },
+    redirectTo?: string 
+  ) => void;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const TOKEN_KEY = 'accessToken';
-const USER_KEY = 'authUser';
+const USER_KEY  = 'authUser';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true); 
+  const [user, setUser]         = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
     try {
-      const token = localStorage.getItem(TOKEN_KEY);
+      const token      = localStorage.getItem(TOKEN_KEY);
       const storedUser = localStorage.getItem(USER_KEY);
 
       if (token && storedUser) {
-        const parsedUser: User = JSON.parse(storedUser);
-        setUser(parsedUser);
+        setUser(JSON.parse(storedUser) as User);
       } else {
         localStorage.removeItem(TOKEN_KEY);
         localStorage.removeItem(USER_KEY);
@@ -50,7 +53,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = (
     token: string,
-    userData: { id: number; name: string; email: string; role: string }
+    userData: { id: number; name: string; email: string; role: string },
+    redirectTo?: string
   ) => {
     const fullUser: User = {
       ...userData,
@@ -61,7 +65,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(USER_KEY, JSON.stringify(fullUser));
     setUser(fullUser);
 
-    if (fullUser.role === 'ADMIN') {
+    if (redirectTo) {
+      router.push(redirectTo);
+    } else if (fullUser.role === 'ADMIN') {
       router.push('/dashboard');
     } else {
       router.push('/');
@@ -86,8 +92,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within AuthProvider');
-  }
+  if (!context) throw new Error('useAuth must be used within AuthProvider');
   return context;
 };
