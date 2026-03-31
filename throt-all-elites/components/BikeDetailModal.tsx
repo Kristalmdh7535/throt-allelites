@@ -6,6 +6,7 @@ import styles from './BikeDetailModal.module.css';
 import { Product } from '@/interfaces/Product';
 import { useAuth } from '@/app/(auth)/contexts/AuthContext';
 import { api } from '@/lib/api';
+import RecommendationStrip from '@/components/RecommendationStrip';
 
 interface BikeDetailModalProps {
   bike: Product;
@@ -231,6 +232,27 @@ export default function BikeDetailModal({ bike, onClose }: BikeDetailModalProps)
                 <SpecItem label="Rear Tyre"        value={bike.rearTyre} />
                 <SpecItem label="Tyre Type"        value={bike.tyreType} />
               </SpecSection>
+
+              {/* ── Popularity recommendations ── */}
+              <div className={styles.recommendationDivider} />
+              <RecommendationStrip
+                type="most-viewed"
+                title="Trending Now"
+                subtitle="Most viewed bikes this month"
+                limit={6}
+                excludeId={bike.id}
+                onBikeClick={onClose}
+                compact
+              />
+              <RecommendationStrip
+                type="most-requested"
+                title="Most Wanted"
+                subtitle="Bikes with the most test ride requests"
+                limit={6}
+                excludeId={bike.id}
+                onBikeClick={onClose}
+                compact
+              />
             </div>
           </div>
         )}

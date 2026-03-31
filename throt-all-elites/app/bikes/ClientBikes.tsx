@@ -1,43 +1,45 @@
-//bikes/ClientBikes.tsx
 'use client';
 
 import { useState, useEffect, useTransition } from 'react';
 import BikeCard from '@/components/BikeCard';
-import BikeDetailModal from '@/components/BikeDetailModal'; 
+import BikeDetailModal from '@/components/BikeDetailModal';
 import styles from '@/components/Bikes.module.css';
 import { Product } from '@/interfaces/Product';
 import { InitialData } from './page';
+
+const BACKEND_URL = 'http://localhost:8080';
 
 interface Props {
   initialData: InitialData;
 }
 
+type SortValue = 'newest' | 'price-asc' | 'price-desc' | 'recommended';
+
 export default function ClientBikes({ initialData }: Props) {
-  const [products, setProducts] = useState<Product[]>(initialData.bikes);
+  const [products, setProducts]     = useState<Product[]>(initialData.bikes);
   const [totalPages, setTotalPages] = useState(initialData.totalPages);
   const [currentPage, setCurrentPage] = useState(0);
-  const [selectedBike, setSelectedBike] = useState<Product | null>(null); 
+  const [selectedBike, setSelectedBike] = useState<Product | null>(null);
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery]       = useState('');
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
-  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-  const [sortValue, setSortValue] = useState<'newest' | 'price-asc' | 'price-desc'>('newest');
+  const [selectedTypes, setSelectedTypes]   = useState<string[]>([]);
+  const [sortValue, setSortValue]           = useState<SortValue>('newest');
 
   const [isFilterVisible, setIsFilterVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading]   = useState(false);
+  const [error, setError]       = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+
+  const isRecommended = sortValue === 'recommended';
 
   const { brands, types } = initialData.filterOptions;
 
   const getSortParams = () => {
     switch (sortValue) {
-      case 'price-asc':
-        return { sortBy: 'price', sortDir: 'asc' };
-      case 'price-desc':
-        return { sortBy: 'price', sortDir: 'desc' };
-      default:
-        return { sortBy: 'id', sortDir: 'desc' };
+      case 'price-asc':  return { sortBy: 'price', sortDir: 'asc'  };
+      case 'price-desc': return { sortBy: 'price', sortDir: 'desc' };
+      default:           return { sortBy: 'id',    sortDir: 'desc' };
     }
   };
 
@@ -46,35 +48,80 @@ export default function ClientBikes({ initialData }: Props) {
     setError(null);
 
     try {
-      const { sortBy, sortDir } = getSortParams();
+      if (sortValue === 'recommended') {
+        const res = await fetch(
+          `${BACKEND_URL}/api/recommendations/most-requested?limit=50`,
+          { cache: 'no-store' }
+        );
+        if (!res.ok) throw new Error('Failed to load recommendations');
 
+        const recs: {
+          id: number; name: string; brand: string; type: string;
+          price: number; engineCapacityCc: number;
+          primaryImageUrl: string | null; score: number;
+        }[] = await res.json();
+
+        if (recs.length === 0) {
+          startTransition(() => {
+            setProducts(initialData.bikes);
+            setTotalPages(initialData.totalPages);
+          });
+          setLoading(false);
+          return;
+        }
+
+        const recIds = recs.map(r => r.id);
+
+        const allRes = await fetch(
+          `${BACKEND_URL}/api/products?page=0&size=1000&sortBy=id&sortDir=asc`,
+          { cache: 'no-store' }
+        );
+        if (!allRes.ok) throw new Error('Failed to load bikes');
+        const allData = await allRes.json();
+        const allProducts: Product[] = allData.content || [];
+
+        const productMap = new Map<number, Product>(
+          allProducts.map((p: Product) => [p.id as number, p])
+        );
+
+        const ordered = recIds
+          .map(id => productMap.get(id))
+          .filter((p): p is Product => p !== undefined);
+
+        const recIdSet = new Set(recIds);
+        const remaining = allProducts.filter((p: Product) => !recIdSet.has(p.id as number));
+        const combined = [...ordered, ...remaining];
+
+        startTransition(() => {
+          setProducts(combined);
+          setTotalPages(1); 
+        });
+
+        setLoading(false);
+        return;
+      }      const { sortBy, sortDir } = getSortParams();
       const params = new URLSearchParams({
-        name: searchQuery.trim(),
-        brand: selectedBrands.join(','),
-        type: selectedTypes.join(','),
-        page: currentPage.toString(),
-        size: '12',
+        name:   searchQuery.trim(),
+        brand:  selectedBrands.join(','),
+        type:   selectedTypes.join(','),
+        page:   currentPage.toString(),
+        size:   '12',
         sortBy,
         sortDir,
       });
 
-      const url = `http://localhost:8080/api/products?${params.toString()}`;
-
-      const res = await fetch(url, {
-        next: { revalidate: 0 },
-        cache: 'no-store',
-      });
-
-      if (!res.ok) {
-        throw new Error(`Failed to load bikes: ${res.status} ${res.statusText}`);
-      }
+      const res = await fetch(
+        `${BACKEND_URL}/api/products?${params.toString()}`,
+        { next: { revalidate: 0 }, cache: 'no-store' }
+      );
+      if (!res.ok) throw new Error(`Failed to load bikes: ${res.status}`);
 
       const data = await res.json();
-
       startTransition(() => {
         setProducts(data.content || []);
         setTotalPages(data.totalPages || 1);
       });
+
     } catch (err) {
       console.error(err);
       setError('Failed to load bikes. Please try again later.');
@@ -92,7 +139,7 @@ export default function ClientBikes({ initialData }: Props) {
   }, [currentPage, searchQuery, selectedBrands, selectedTypes, sortValue]);
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortValue(e.target.value as 'newest' | 'price-asc' | 'price-desc');
+    setSortValue(e.target.value as SortValue);
   };
 
   const clearFilters = () => {
@@ -106,6 +153,7 @@ export default function ClientBikes({ initialData }: Props) {
   return (
     <div className={`${styles.pageContainer} min-h-screen`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
         {/* Header */}
         <header className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight">
@@ -124,12 +172,14 @@ export default function ClientBikes({ initialData }: Props) {
               placeholder="Search by name..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+              disabled={isRecommended}
+              className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all disabled:opacity-40 disabled:cursor-not-allowed"
             />
 
             <button
               onClick={() => setIsFilterVisible(!isFilterVisible)}
-              className="p-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors font-medium flex items-center justify-center gap-2"
+              disabled={isRecommended}
+              className="p-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors font-medium flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
             >
               {isFilterVisible ? 'Hide' : 'Show'} Filters
             </button>
@@ -142,11 +192,23 @@ export default function ClientBikes({ initialData }: Props) {
               <option value="newest">Newest First</option>
               <option value="price-asc">Price: Low to High</option>
               <option value="price-desc">Price: High to Low</option>
+              <option value="recommended">Most Requested</option>
             </select>
           </div>
 
-          {/* Filters panel */}
-          {isFilterVisible && (
+          {/* Recommended mode banner */}
+          {isRecommended && (
+            <div className="mt-4 px-4 py-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3">
+              <span className="text-xl">🏍️</span>
+              <p className="text-sm text-red-700 font-medium">
+                Showing bikes ranked by test ride demand — the most requested bikes appear first.
+                Filters and search are disabled in this mode.
+              </p>
+            </div>
+          )}
+
+          {/* Filters panel — hidden in recommended mode */}
+          {isFilterVisible && !isRecommended && (
             <div className="mt-8 pt-6 border-t border-gray-200 animate-fade-in">
               <div className="grid md:grid-cols-2 gap-10">
                 <div>
@@ -218,19 +280,38 @@ export default function ClientBikes({ initialData }: Props) {
           </div>
         ) : (
           <>
+            <div className="mb-6 flex items-center gap-3">
+              <p className="text-sm text-gray-500">
+                {isRecommended
+                  ? `${products.length} bikes — ranked by test ride demand`
+                  : `${products.length} bikes found`}
+              </p>
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-              {products.map(product => (
+              {products.map((product, index) => (
                 <div
                   key={product.id}
-                  className="transform transition-all duration-300 hover:-translate-y-2 cursor-pointer"
-                  onClick={() => setSelectedBike(product)} // ← this opens the modal
+                  className="transform transition-all duration-300 hover:-translate-y-2 cursor-pointer relative"
+                  onClick={() => setSelectedBike(product)}
                 >
+                  {isRecommended && index < 3 && (
+                    <div
+                      className="absolute top-3 left-3 z-10 flex items-center gap-1 px-2 py-1 rounded-full text-xs font-bold shadow-md"
+                      style={{
+                        background: index === 0 ? '#dc2626' : index === 1 ? '#ea580c' : '#d97706',
+                        color: 'white',
+                      }}
+                    >
+                      {index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉'}
+                      #{index + 1} Most Wanted
+                    </div>
+                  )}
                   <BikeCard bike={product} />
                 </div>
               ))}
             </div>
-
-            {totalPages > 1 && (
+            {!isRecommended && totalPages > 1 && (
               <div className="flex justify-center items-center gap-8 mt-16">
                 <button
                   onClick={() => setCurrentPage(p => Math.max(0, p - 1))}
@@ -257,7 +338,7 @@ export default function ClientBikes({ initialData }: Props) {
         )}
       </div>
 
-      {/* Modal – only shown when a bike is selected */}
+      {/* Modal */}
       {selectedBike && (
         <BikeDetailModal
           bike={selectedBike}
