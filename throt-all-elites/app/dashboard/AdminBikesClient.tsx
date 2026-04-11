@@ -230,40 +230,345 @@ export default function AdminBikesClient() {
             <h2 className={styles.modalTitle}>{modalMode === 'add' ? 'Add New Bike' : 'Edit Bike'}</h2>
             <form onSubmit={handleSubmit}>
               <div className={styles.formGrid}>
-                <input name="name"             value={selectedProduct.name || ''}              onChange={handleInputChange} placeholder="Bike Name"              required className={styles.input} disabled={submitting} />
-                <select name="brand"           value={selectedProduct.brand || ''}             onChange={handleInputChange} required className={styles.input} disabled={submitting}>
-                  <option value="">Select Brand</option>
-                  {commonBrands.map(b => <option key={b} value={b}>{b}</option>)}
-                </select>
-                <select name="type"            value={selectedProduct.type || ''}              onChange={handleInputChange} required className={styles.input} disabled={submitting}>
-                  <option value="">Select Type</option>
-                  {commonTypes.map(t => <option key={t} value={t}>{t}</option>)}
-                </select>
-                <input name="dimensionMmLWH"   value={selectedProduct.dimensionMmLWH || ''}   onChange={handleInputChange} placeholder="Dimensions (L×W×H mm)"   required className={styles.input} disabled={submitting} />
-                <input name="engineCapacityCc" value={selectedProduct.engineCapacityCc || ''}  onChange={handleInputChange} placeholder="Engine CC" type="number"  required className={styles.input} disabled={submitting} />
-                <input name="engineType"       value={selectedProduct.engineType || ''}        onChange={handleInputChange} placeholder="Engine Type"              required className={styles.input} disabled={submitting} />
-                <input name="maxPower"         value={selectedProduct.maxPower || ''}          onChange={handleInputChange} placeholder="Max Power"                required className={styles.input} disabled={submitting} />
-                <input name="maxTorque"        value={selectedProduct.maxTorque || ''}         onChange={handleInputChange} placeholder="Max Torque"               required className={styles.input} disabled={submitting} />
-                <input name="mileageKmpl"      value={selectedProduct.mileageKmpl || ''}       onChange={handleInputChange} placeholder="Mileage (kmpl)"                    className={styles.input} disabled={submitting} />
-                <input name="topSpeedKmph"     value={selectedProduct.topSpeedKmph || ''}      onChange={handleInputChange} placeholder="Top Speed (kmph)"                  className={styles.input} disabled={submitting} />
-                <input name="gearbox"          value={selectedProduct.gearbox || ''}           onChange={handleInputChange} placeholder="Gearbox"                            className={styles.input} disabled={submitting} />
-                <input name="clutchType"       value={selectedProduct.clutchType || ''}        onChange={handleInputChange} placeholder="Clutch Type"                        className={styles.input} disabled={submitting} />
-                <input name="frontBrake"       value={selectedProduct.frontBrake || ''}        onChange={handleInputChange} placeholder="Front Brake"                        className={styles.input} disabled={submitting} />
-                <input name="rearBrake"        value={selectedProduct.rearBrake || ''}         onChange={handleInputChange} placeholder="Rear Brake"                         className={styles.input} disabled={submitting} />
-                <input name="frontSuspension"  value={selectedProduct.frontSuspension || ''}   onChange={handleInputChange} placeholder="Front Suspension"                   className={styles.input} disabled={submitting} />
-                <input name="rearSuspension"   value={selectedProduct.rearSuspension || ''}    onChange={handleInputChange} placeholder="Rear Suspension"                    className={styles.input} disabled={submitting} />
-                <input name="frontTyre"        value={selectedProduct.frontTyre || ''}         onChange={handleInputChange} placeholder="Front Tyre"                         className={styles.input} disabled={submitting} />
-                <input name="rearTyre"         value={selectedProduct.rearTyre || ''}          onChange={handleInputChange} placeholder="Rear Tyre"                          className={styles.input} disabled={submitting} />
-                <input name="tyreType"         value={selectedProduct.tyreType || ''}          onChange={handleInputChange} placeholder="Tyre Type"                          className={styles.input} disabled={submitting} />
-                <input name="fuelTankCapacityL" value={selectedProduct.fuelTankCapacityL || ''} onChange={handleInputChange} placeholder="Fuel Tank (L)"                    className={styles.input} disabled={submitting} />
-                <input name="seatHeightMm"     value={selectedProduct.seatHeightMm || ''}      onChange={handleInputChange} placeholder="Seat Height (mm)"                  className={styles.input} disabled={submitting} />
-                <input name="groundClearanceMm" value={selectedProduct.groundClearanceMm || ''} onChange={handleInputChange} placeholder="Ground Clearance (mm)"            className={styles.input} disabled={submitting} />
-                <input name="kerbWeightKg"     value={selectedProduct.kerbWeightKg || ''}      onChange={handleInputChange} placeholder="Kerb Weight (kg)"                  className={styles.input} disabled={submitting} />
-                <input name="price"  type="number" step="0.01" value={selectedProduct.price || ''} onChange={handleInputChange} placeholder="Price" required className={styles.input} disabled={submitting} />
-                <input name="stock" type="number"              value={selectedProduct.stock || ''} onChange={handleInputChange} placeholder="Stock" required className={styles.input} disabled={submitting} />
+                {/* Basic Information */}
+                <div className={styles.formField}>
+                  <label className={styles.label}>Bike Name *</label>
+                  <input 
+                    name="name" 
+                    value={selectedProduct.name || ''} 
+                    onChange={handleInputChange} 
+                    placeholder="Bike Name" 
+                    required 
+                    className={styles.input} 
+                    disabled={submitting} 
+                  />
+                </div>
+
+                <div className={styles.formField}>
+                  <label className={styles.label}>Brand *</label>
+                  <select 
+                    name="brand" 
+                    value={selectedProduct.brand || ''} 
+                    onChange={handleInputChange} 
+                    required 
+                    className={styles.input} 
+                    disabled={submitting}
+                  >
+                    <option value="">Select Brand</option>
+                    {commonBrands.map(b => <option key={b} value={b}>{b}</option>)}
+                  </select>
+                </div>
+
+                <div className={styles.formField}>
+                  <label className={styles.label}>Type *</label>
+                  <select 
+                    name="type" 
+                    value={selectedProduct.type || ''} 
+                    onChange={handleInputChange} 
+                    required 
+                    className={styles.input} 
+                    disabled={submitting}
+                  >
+                    <option value="">Select Type</option>
+                    {commonTypes.map(t => <option key={t} value={t}>{t}</option>)}
+                  </select>
+                </div>
+
+                <div className={styles.formField}>
+                  <label className={styles.label}>Dimensions (L×W×H mm) *</label>
+                  <input 
+                    name="dimensionMmLWH" 
+                    value={selectedProduct.dimensionMmLWH || ''} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., 2100×800×1100" 
+                    required 
+                    className={styles.input} 
+                    disabled={submitting} 
+                  />
+                </div>
+
+                {/* Engine Specifications */}
+                <div className={styles.formField}>
+                  <label className={styles.label}>Engine Capacity (CC) *</label>
+                  <input 
+                    name="engineCapacityCc" 
+                    value={selectedProduct.engineCapacityCc || ''} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., 998" 
+                    type="number" 
+                    required 
+                    className={styles.input} 
+                    disabled={submitting} 
+                  />
+                </div>
+
+                <div className={styles.formField}>
+                  <label className={styles.label}>Engine Type *</label>
+                  <input 
+                    name="engineType" 
+                    value={selectedProduct.engineType || ''} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., L-Twin" 
+                    required 
+                    className={styles.input} 
+                    disabled={submitting} 
+                  />
+                </div>
+
+                <div className={styles.formField}>
+                  <label className={styles.label}>Max Power *</label>
+                  <input 
+                    name="maxPower" 
+                    value={selectedProduct.maxPower || ''} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., 208 HP @ 13,000 rpm" 
+                    required 
+                    className={styles.input} 
+                    disabled={submitting} 
+                  />
+                </div>
+
+                <div className={styles.formField}>
+                  <label className={styles.label}>Max Torque *</label>
+                  <input 
+                    name="maxTorque" 
+                    value={selectedProduct.maxTorque || ''} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., 123.6 Nm @ 11,250 rpm" 
+                    required 
+                    className={styles.input} 
+                    disabled={submitting} 
+                  />
+                </div>
+
+                {/* Performance */}
+                <div className={styles.formField}>
+                  <label className={styles.label}>Mileage (kmpl)</label>
+                  <input 
+                    name="mileageKmpl" 
+                    value={selectedProduct.mileageKmpl || ''} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., 15.5" 
+                    className={styles.input} 
+                    disabled={submitting} 
+                  />
+                </div>
+
+                <div className={styles.formField}>
+                  <label className={styles.label}>Top Speed (kmph)</label>
+                  <input 
+                    name="topSpeedKmph" 
+                    value={selectedProduct.topSpeedKmph || ''} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., 299" 
+                    className={styles.input} 
+                    disabled={submitting} 
+                  />
+                </div>
+
+                {/* Transmission */}
+                <div className={styles.formField}>
+                  <label className={styles.label}>Gearbox</label>
+                  <input 
+                    name="gearbox" 
+                    value={selectedProduct.gearbox || ''} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., 6-Speed" 
+                    className={styles.input} 
+                    disabled={submitting} 
+                  />
+                </div>
+
+                <div className={styles.formField}>
+                  <label className={styles.label}>Clutch Type</label>
+                  <input 
+                    name="clutchType" 
+                    value={selectedProduct.clutchType || ''} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., Wet Multiplate" 
+                    className={styles.input} 
+                    disabled={submitting} 
+                  />
+                </div>
+
+                {/* Brakes */}
+                <div className={styles.formField}>
+                  <label className={styles.label}>Front Brake</label>
+                  <input 
+                    name="frontBrake" 
+                    value={selectedProduct.frontBrake || ''} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., Dual 330mm Disc" 
+                    className={styles.input} 
+                    disabled={submitting} 
+                  />
+                </div>
+
+                <div className={styles.formField}>
+                  <label className={styles.label}>Rear Brake</label>
+                  <input 
+                    name="rearBrake" 
+                    value={selectedProduct.rearBrake || ''} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., Single 245mm Disc" 
+                    className={styles.input} 
+                    disabled={submitting} 
+                  />
+                </div>
+
+                {/* Suspension */}
+                <div className={styles.formField}>
+                  <label className={styles.label}>Front Suspension</label>
+                  <input 
+                    name="frontSuspension" 
+                    value={selectedProduct.frontSuspension || ''} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., Öhlins USD Fork" 
+                    className={styles.input} 
+                    disabled={submitting} 
+                  />
+                </div>
+
+                <div className={styles.formField}>
+                  <label className={styles.label}>Rear Suspension</label>
+                  <input 
+                    name="rearSuspension" 
+                    value={selectedProduct.rearSuspension || ''} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., Öhlins Monoshock" 
+                    className={styles.input} 
+                    disabled={submitting} 
+                  />
+                </div>
+
+                {/* Tyres */}
+                <div className={styles.formField}>
+                  <label className={styles.label}>Front Tyre</label>
+                  <input 
+                    name="frontTyre" 
+                    value={selectedProduct.frontTyre || ''} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., 120/70 ZR17" 
+                    className={styles.input} 
+                    disabled={submitting} 
+                  />
+                </div>
+
+                <div className={styles.formField}>
+                  <label className={styles.label}>Rear Tyre</label>
+                  <input 
+                    name="rearTyre" 
+                    value={selectedProduct.rearTyre || ''} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., 200/60 ZR17" 
+                    className={styles.input} 
+                    disabled={submitting} 
+                  />
+                </div>
+
+                <div className={styles.formField}>
+                  <label className={styles.label}>Tyre Type</label>
+                  <input 
+                    name="tyreType" 
+                    value={selectedProduct.tyreType || ''} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., Tubeless" 
+                    className={styles.input} 
+                    disabled={submitting} 
+                  />
+                </div>
+
+                {/* Dimensions & Capacity */}
+                <div className={styles.formField}>
+                  <label className={styles.label}>Fuel Tank Capacity (L)</label>
+                  <input 
+                    name="fuelTankCapacityL" 
+                    value={selectedProduct.fuelTankCapacityL || ''} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., 16.5" 
+                    className={styles.input} 
+                    disabled={submitting} 
+                  />
+                </div>
+
+                <div className={styles.formField}>
+                  <label className={styles.label}>Seat Height (mm)</label>
+                  <input 
+                    name="seatHeightMm" 
+                    value={selectedProduct.seatHeightMm || ''} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., 830" 
+                    className={styles.input} 
+                    disabled={submitting} 
+                  />
+                </div>
+
+                <div className={styles.formField}>
+                  <label className={styles.label}>Ground Clearance (mm)</label>
+                  <input 
+                    name="groundClearanceMm" 
+                    value={selectedProduct.groundClearanceMm || ''} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., 140" 
+                    className={styles.input} 
+                    disabled={submitting} 
+                  />
+                </div>
+
+                <div className={styles.formField}>
+                  <label className={styles.label}>Kerb Weight (kg)</label>
+                  <input 
+                    name="kerbWeightKg" 
+                    value={selectedProduct.kerbWeightKg || ''} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., 195" 
+                    className={styles.input} 
+                    disabled={submitting} 
+                  />
+                </div>
+
+                {/* Pricing & Stock */}
+                <div className={styles.formField}>
+                  <label className={styles.label}>Price (Rs.) *</label>
+                  <input 
+                    name="price" 
+                    type="number" 
+                    step="0.01" 
+                    value={selectedProduct.price || ''} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., 2500000" 
+                    required 
+                    className={styles.input} 
+                    disabled={submitting} 
+                  />
+                </div>
+
+                <div className={styles.formField}>
+                  <label className={styles.label}>Stock *</label>
+                  <input 
+                    name="stock" 
+                    type="number" 
+                    value={selectedProduct.stock || ''} 
+                    onChange={handleInputChange} 
+                    placeholder="e.g., 5" 
+                    required 
+                    className={styles.input} 
+                    disabled={submitting} 
+                  />
+                </div>
               </div>
 
-              <input type="file" multiple accept="image/*" onChange={handleFileChange} className={styles.fileInput} disabled={submitting} />
+              <div className={styles.formField} style={{ marginTop: '1.5rem' }}>
+                <label className={styles.label}>Bike Images:     </label>
+                <input 
+                  type="file" 
+                  multiple 
+                  accept="image/*" 
+                  onChange={handleFileChange} 
+                  className={styles.fileInput} 
+                  disabled={submitting} 
+                />
+              </div>
 
               <div className={styles.modalButtons}>
                 <button type="submit" className={styles.saveButton} disabled={submitting}>

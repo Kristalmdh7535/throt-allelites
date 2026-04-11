@@ -127,3 +127,25 @@
   color: #dc2626;
   background: #fef2f2;
 }
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.25rem;
+}
+
+.label::after {
+  content: '';
+}
+
+.label.required::after {
+  content: ' *';
+  color: #ef4444;
+}

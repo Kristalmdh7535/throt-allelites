@@ -76,7 +76,7 @@ const Services: React.FC = () => {
               </div>
               <h3 className="service-card-title">{service.title}</h3>
               <p className="service-card-description">{service.description}</p>
-              <div className="service-card-cta">
+              {/* <div className="service-card-cta">
                 <Link href={service.ctaLink} passHref>
                   <motion.button
                     className="cta-button"
@@ -85,7 +85,7 @@ const Services: React.FC = () => {
                     {service.cta}
                   </motion.button>
                 </Link>
-              </div>
+              </div> */}
             </motion.div>
           ))}
         </div>
