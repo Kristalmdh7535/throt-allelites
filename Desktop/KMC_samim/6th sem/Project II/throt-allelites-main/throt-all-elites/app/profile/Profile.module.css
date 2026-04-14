@@ -1,0 +1,488 @@
+/* app/profile/Profile.module.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+/* ── Page shell: sidebar + main ── */
+.page {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+  background: #f9fafb;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* ══════════════════════════════════
+   SIDEBAR
+══════════════════════════════════ */
+.sidebar {
+  background: white;
+  border-right: 1px solid #e5e7eb;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+/* Avatar block */
+.avatarWrap {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #111827;
+  color: #f6e05e;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 0.05em;
+}
+
+.avatarInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  overflow: hidden;
+}
+
+.avatarName {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #111827;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.avatarRole {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Nav */
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  flex: 1;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #6b7280;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, color 0.15s;
+  width: 100%;
+}
+
+.navItem:hover { background: #f9fafb; color: #111827; }
+
+.navItemActive {
+  background: #f3f4f6;
+  color: #111827;
+  font-weight: 600;
+}
+
+.navIcon { font-size: 1rem; }
+
+/* Sidebar footer */
+.sidebarFooter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f3f4f6;
+}
+
+.dashboardBtn {
+  padding: 0.65rem 1rem;
+  background: #111827;
+  color: #f6e05e;
+  border: none;
+  border-radius: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  text-align: center;
+}
+
+.dashboardBtn:hover { background: #1f2937; }
+
+.logoutBtn {
+  padding: 0.65rem 1rem;
+  background: transparent;
+  border: 1px solid #e5e7eb;
+  color: #6b7280;
+  border-radius: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  text-align: center;
+}
+
+.logoutBtn:hover {
+  background: #fef2f2;
+  border-color: #fca5a5;
+  color: #dc2626;
+}
+
+/* ══════════════════════════════════
+   MAIN CONTENT
+══════════════════════════════════ */
+.main {
+  padding: 2.5rem 2.5rem 4rem;
+  overflow-y: auto;
+}
+
+.tabContent { max-width: 800px; }
+
+.tabHeader {
+  margin-bottom: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tabTitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #111827;
+  margin: 0 0 0.3rem;
+  letter-spacing: -0.01em;
+}
+
+.tabSub {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* ── Account card ── */
+.card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.cardSection {
+  padding: 1.75rem 2rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.cardSection:last-child { border-bottom: none; }
+
+.cardSectionTitle {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #9ca3af;
+  margin: 0 0 1.25rem;
+}
+
+.fieldGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.fieldLabel {
+  font-size: 0.78rem;
+  color: #9ca3af;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.fieldValue {
+  font-size: 0.95rem;
+  color: #111827;
+  font-weight: 500;
+}
+
+.roleAdmin {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: #fef9c3;
+  color: #713f12;
+  padding: 0.25rem 0.65rem;
+  border-radius: 99px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.roleUser {
+  display: inline-flex;
+  align-items: center;
+  background: #eff6ff;
+  color: #1e40af;
+  padding: 0.25rem 0.65rem;
+  border-radius: 99px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.authNote {
+  font-size: 0.9rem;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0;
+  background: #f9fafb;
+  padding: 1rem 1.25rem;
+  border-radius: 6px;
+  border-left: 3px solid #d1d5db;
+}
+
+/* ══════════════════════════════════
+   TEST RIDES LIST
+══════════════════════════════════ */
+.ridesList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.rideCard {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: box-shadow 0.15s;
+}
+
+.rideCard:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.07); }
+
+/* Left border colour per status */
+.ridePENDING   { border-left: 4px solid #fbbf24; }
+.rideCONFIRMED { border-left: 4px solid #22c55e; }
+.rideDECLINED  { border-left: 4px solid #ef4444; }
+
+.rideCardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.rideBikeInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.rideBrand {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #9ca3af;
+}
+
+.rideName {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+
+/* Status badge */
+.rideBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 99px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.badgePENDING   { background: #fef9c3; color: #713f12; }
+.badgeCONFIRMED { background: #dcfce7; color: #14532d; }
+.badgeDECLINED  { background: #fee2e2; color: #991b1b; }
+
+/* Ride detail row grid */
+.rideDetails {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem 1.5rem;
+  padding: 1rem;
+  background: #f9fafb;
+  border-radius: 8px;
+}
+
+.rideDetail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.rideDetailLabel {
+  font-size: 0.72rem;
+  color: #9ca3af;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.rideDetailValue {
+  font-size: 0.88rem;
+  color: #374151;
+  font-weight: 500;
+}
+
+/* Notes */
+.rideNotes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.rideNotesLabel {
+  font-size: 0.72rem;
+  color: #9ca3af;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.rideNotesText {
+  font-size: 0.88rem;
+  color: #374151;
+  line-height: 1.5;
+}
+
+/* Alert box (confirmed info / decline reason) */
+.rideAlert {
+  padding: 0.85rem 1.1rem;
+  border-radius: 8px;
+  border: 1px solid;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+/* Re-book button */
+.reBookBtn {
+  align-self: flex-start;
+  padding: 0.6rem 1.25rem;
+  background: #111827;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.reBookBtn:hover { background: #1f2937; }
+
+/* ── State boxes ── */
+.stateBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 2rem;
+  text-align: center;
+  gap: 0.75rem;
+}
+
+.stateIcon { font-size: 2.5rem; opacity: 0.5; }
+
+.stateTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #374151;
+  margin: 0;
+}
+
+.stateText {
+  font-size: 0.9rem;
+  color: #9ca3af;
+  max-width: 38ch;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #dc2626;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.retryBtn,
+.browseBikesBtn {
+  margin-top: 0.5rem;
+  padding: 0.65rem 1.5rem;
+  background: #111827;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.retryBtn:hover,
+.browseBikesBtn:hover { background: #1f2937; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .page { grid-template-columns: 1fr; }
+  .sidebar { height: auto; position: static; flex-direction: row; flex-wrap: wrap; padding: 1rem; }
+  .avatarWrap { flex: 1; min-width: 200px; border-bottom: none; padding-bottom: 0; }
+  .nav { flex-direction: row; flex: none; }
+  .sidebarFooter { flex-direction: row; border-top: none; padding-top: 0; }
+  .main { padding: 1.5rem; }
+  .fieldGrid { grid-template-columns: 1fr; }
+  .rideDetails { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,21 @@
+src/
+├── app/                  (if using Next.js App Router)
+│   ├── (auth)/           ← Group all auth routes here
+│   │   ├── login/
+│   │   │   └── page.tsx
+│   │   ├── signup/
+│   │   │   └── page.tsx
+│   │   └── layout.tsx    (optional: shared auth layout, e.g. no navbar)
+│   ├── admin/            ← Later for admin pages
+│   ├── bikes/
+│   ├── page.tsx          ← Home
+│   └── layout.tsx        ← Main layout with navbar
+│
+├── components/
+│   ├── ui/               ← Reusable UI (Button, Input, Card, etc.)
+│   ├── AuthForm.tsx      ← Shared form component for login/signup
+│   ├── Navbar.tsx
+│   ├── BikeCard.tsx
+│   └── ...               ← Other content components
+│
+└── lib/ or utils/        ← Auth helpers, API calls, etc.
